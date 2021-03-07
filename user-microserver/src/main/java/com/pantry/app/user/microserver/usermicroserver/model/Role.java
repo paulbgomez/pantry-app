@@ -1,5 +1,7 @@
 package com.pantry.app.user.microserver.usermicroserver.model;
 
+import com.pantry.app.user.microserver.usermicroserver.enums.Status;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,9 @@ public class Role {
     @Id
     @Column(name = "user_id")
     private Long id;
-    private String name; // TODO: cambiar a enum ADMIN, USER, THIRD_PARTY
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToOne
     @MapsId
@@ -25,8 +29,8 @@ public class Role {
     /**
      * Class constructor specifying name and the user
      **/
-    public Role(String name, User user) {
-        this.name = name;
+    public Role(Status status, User user) {
+        setStatus(status);
         this.user = user;
     }
 
@@ -40,12 +44,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public User getUser() {

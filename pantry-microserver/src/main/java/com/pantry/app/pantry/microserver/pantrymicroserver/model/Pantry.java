@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Pantry {
@@ -16,28 +18,19 @@ public class Pantry {
     Long id;
     String name;
     Long userId;
-    Long productId;
-    Integer quantity;
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     LocalDateTime creationDate;
 
+    @OneToMany(mappedBy = "pantry")
+    Set<ProductInPantry> productsInPantry;
 
-    
     public Pantry() {
     }
 
     public Pantry(String name, Long userId) {
         this.name = name;
         this.userId = userId;
-        setCreationDate(LocalDateTime.now());
-    }
-
-    public Pantry(String name, Long userId, Long productId, Integer quantity) {
-        this.name = name;
-        this.userId = userId;
-        this.productId = productId;
-        this.quantity = quantity;
         setCreationDate(LocalDateTime.now());
     }
 
@@ -69,23 +62,4 @@ public class Pantry {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
 }

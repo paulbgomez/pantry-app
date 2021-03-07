@@ -1,0 +1,65 @@
+package com.pantry.app.pantry.microserver.pantrymicroserver.model;
+
+import com.pantry.app.pantry.microserver.pantrymicroserver.utils.CompositeKey;
+
+import javax.persistence.*;
+
+@Entity
+public class ProductInPantry {
+
+    @EmbeddedId
+    CompositeKey id;
+
+    @ManyToOne
+    @MapsId("pantryId")
+    @JoinColumn(name = "pantry_id")
+    Pantry pantry;
+
+    @ManyToOne
+    @MapsId("productId")
+    @JoinColumn(name = "product_id")
+    Product product;
+
+    Integer quantity;
+
+    public ProductInPantry() {
+    }
+
+    public ProductInPantry(Pantry pantry, Product product, Integer quantity) {
+        this.pantry = pantry;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    public CompositeKey getId() {
+        return id;
+    }
+
+    public void setId(CompositeKey id) {
+        this.id = id;
+    }
+
+    public Pantry getPantry() {
+        return pantry;
+    }
+
+    public void setPantry(Pantry pantry) {
+        this.pantry = pantry;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+}
