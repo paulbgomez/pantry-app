@@ -1,4 +1,4 @@
-package com.pantry.app.edgeservice.model;
+package com.pantry.app.user.microserver.usermicroserver.model;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,11 +10,11 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    protected String username;
-    protected String password;
-    protected String email;
-    protected String name;
+    private Long id;
+    private String username;
+    private String password;
+    private String email;
+    private String name;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -99,5 +99,4 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
 }

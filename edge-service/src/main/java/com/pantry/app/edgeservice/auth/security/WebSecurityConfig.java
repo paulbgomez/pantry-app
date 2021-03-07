@@ -1,6 +1,5 @@
 package com.pantry.app.edgeservice.auth.security;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -38,9 +37,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthTokenFilter();
     }
 
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService);
+//    }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth
+                .inMemoryAuthentication()
+                .withUser("chorizo").password("chorizo").roles("ADMIN");
     }
 
     @Override
@@ -65,12 +71,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/authenticate").permitAll()
                 .antMatchers("/signup").permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
+
 }

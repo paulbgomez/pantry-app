@@ -33,9 +33,9 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
+    private static String userAuthOk;
 
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         Authentication authentication;
@@ -73,5 +73,13 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully!");
     }
 
+
+    public static String getUserAuthOk() {
+        return userAuthOk;
+    }
+
+    public static void setUserAuthOk(String userAuthOk) {
+        AuthController.userAuthOk = userAuthOk;
+    }
 
 }
