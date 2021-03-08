@@ -1,4 +1,4 @@
-package com.pantry.app.pantry.microserver.pantrymicroserver.controller;
+package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
 import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;

@@ -1,12 +1,14 @@
-package com.pantry.app.pantry.microserver.pantrymicroserver.controller;
+package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.ProductInPantry;
 import com.pantry.app.pantry.microserver.pantrymicroserver.repository.PantryRepository;
 import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;
+import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IPantryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,7 @@ import java.util.*;
 public class PantryController {
 
     @Autowired
-    PantryRepository pantryRepository;
+    IPantryService pantryService;
 
     @Autowired
     UserClient userClient;
@@ -28,16 +30,8 @@ public class PantryController {
 
     @GetMapping("pantry/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Pantry getPantryById(@PathVariable Long id){
-        if (pantryRepository.existsById(id)){
-            Pantry pantry = pantryRepository.findById(id).get();
-            for (ProductInPantry x: pantry.getProductsInPantry()){
-                System.out.println("product id: " + x.getProduct().getName() + " in pantry: " + x.getPantry().getId() + ". Total : " + x.getQuantity() );
-            };
-            return pantry;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
-        }
+    public PantryDTO getPantryById(@PathVariable Long id){
+        return pantryService.getPantryById(id);
     }
 
     @GetMapping("pantry/all/{id}")
