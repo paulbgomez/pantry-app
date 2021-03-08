@@ -1,13 +1,10 @@
-package com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces;
+package com.pantry.app.pantry.microserver.pantrymicroserver.controller.interfaces;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public interface IPantryService {
+public interface IPantryController {
 
     PantryDTO getPantryById(Long id);
 

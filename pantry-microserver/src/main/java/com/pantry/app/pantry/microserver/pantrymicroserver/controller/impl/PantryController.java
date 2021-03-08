@@ -1,6 +1,7 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
+import com.pantry.app.pantry.microserver.pantrymicroserver.controller.interfaces.IPantryController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
@@ -17,16 +18,10 @@ import java.math.BigInteger;
 import java.util.*;
 
 @RestController
-public class PantryController {
+public class PantryController implements IPantryController {
 
     @Autowired
     IPantryService pantryService;
-
-    @Autowired
-    UserClient userClient;
-
-    @Autowired
-    ProductRepository productRepository;
 
     @GetMapping("pantry/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -36,90 +31,27 @@ public class PantryController {
 
     @GetMapping("pantry/all/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Pantry> findAll(@PathVariable Long id){
-        UserDTO user = userClient.getUserById(id);
-        if (user.getId().equals(id)){
-
-            /* What I need */
-            Pantry pantry;
-            Product product;
-            Integer quantityProduct;
-            Set<ProductInPantry> productsInPantry = new HashSet<>();
-
-            /* What join table brings */
-            Set<Object[]> products = pantryRepository.getProductsOfPantriesForUserId(id);
-
-
-            for (Object[] p: products) {
-                BigInteger productId = (BigInteger) p[0];
-                BigInteger pantryId = (BigInteger) p[2];
-                if(productRepository.existsById(productId.longValue()) && pantryRepository.existsById(pantryId.longValue())){
-                    product = productRepository.findById(productId.longValue()).get();
-                    pantry = pantryRepository.findById(pantryId.longValue()).get();
-                    quantityProduct = (Integer) p[1];
-                    productsInPantry.add(new ProductInPantry(pantry, product, quantityProduct));
-                }
-            }
-            List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(id);
-
-            for (Pantry singlePantry: pantries) {
-                singlePantry.setProductsInPantry(productsInPantry);
-            }
-
-            for (ProductInPantry x: productsInPantry){
-                System.out.println("product id: " + x.getProduct().getName() + " in pantry: " + x.getPantry().getId() + ". Total : " + x.getQuantity() );
-            }
-
-            return pantries;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
-        }
+    public List<PantryDTO> findAll(@PathVariable Long id){
+        return pantryService.findAll(id);
     }
 
     @PostMapping("pantry/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Pantry add(@RequestBody Pantry pantry, @PathVariable Long id){
-        UserDTO user = userClient.getUserById(id);
-       if (user.getId().equals(id)){
-           Pantry pantryModel = new Pantry(
-                   pantry.getName(),
-                   pantry.getUserId()
-           );
-           pantryModel.setUserId(id);
-           return pantryRepository.save(pantryModel);
-       } else {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
-       }
+    public PantryDTO add(@RequestBody PantryDTO pantryDTO, @PathVariable Long id){
+        return pantryService.add(pantryDTO, id);
     }
 
 
     @DeleteMapping("pantry/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id, @RequestBody Pantry pantry){
-        UserDTO user = userClient.getUserById(id);
-        if (user.getId().equals(id)){
-            List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(id);
-            pantryRepository.delete(Objects.requireNonNull(pantries.stream().filter(item -> item.getName().equals(pantry.getName()))
-                    .findAny().orElse(null)));
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
-        }
+    public void delete(@PathVariable Long id, @RequestBody PantryDTO pantryDTO){
+        pantryService.delete(id, pantryDTO);
     }
 
     @PatchMapping("pantry/{pantryId}/{productId}={quantity}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity){
-        if (pantryRepository.existsById(pantryId)){
-            Pantry pantry = pantryRepository.findById(pantryId).get();
-            for (ProductInPantry x: pantry.getProductsInPantry()){
-               if(x.getProduct().getId().equals(productId)){
-                   x.setQuantity(quantity);
-               }
-            };
-            pantryRepository.save(pantry);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
-        }
+       pantryService.updatePantry(pantryId, productId, quantity);
     }
 
 
