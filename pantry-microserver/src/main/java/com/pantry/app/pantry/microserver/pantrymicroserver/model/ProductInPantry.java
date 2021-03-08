@@ -1,5 +1,6 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pantry.app.pantry.microserver.pantrymicroserver.utils.CompositeKey;
 
 import javax.persistence.*;
@@ -10,11 +11,13 @@ public class ProductInPantry {
     @EmbeddedId
     CompositeKey id;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("pantryId")
     @JoinColumn(name = "pantry_id")
     Pantry pantry;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("productId")
     @JoinColumn(name = "product_id")
@@ -61,5 +64,15 @@ public class ProductInPantry {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductInPantry{" +
+                "id=" + id +
+                ", pantry=" + pantry +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                '}';
     }
 }

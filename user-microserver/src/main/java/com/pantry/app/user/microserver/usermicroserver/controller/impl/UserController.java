@@ -1,4 +1,4 @@
-package com.pantry.app.user.microserver.usermicroserver.controller;
+package com.pantry.app.user.microserver.usermicroserver.controller.impl;
 
 import com.pantry.app.user.microserver.usermicroserver.model.User;
 import com.pantry.app.user.microserver.usermicroserver.repository.UserRepository;
@@ -37,6 +37,7 @@ public class UserController {
     @PostMapping("user")
     @ResponseStatus(HttpStatus.CREATED)
     public User add(@RequestBody User user){
+        //TODO construir el rol desde servico y añadirlo al user
         return userRepository.save(user);
     }
 

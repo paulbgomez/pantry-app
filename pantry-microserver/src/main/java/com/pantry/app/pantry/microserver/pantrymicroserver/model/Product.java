@@ -1,5 +1,6 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pantry.app.pantry.microserver.pantrymicroserver.enums.Category;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Product {
     private Category category;
     private Long barcode;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     Set<ProductInPantry> productsInPantry;
 
@@ -59,5 +61,24 @@ public class Product {
 
     public void setBarcode(Long barcode) {
         this.barcode = barcode;
+    }
+
+    public Set<ProductInPantry> getProductsInPantry() {
+        return productsInPantry;
+    }
+
+    public void setProductsInPantry(Set<ProductInPantry> productsInPantry) {
+        this.productsInPantry = productsInPantry;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", barcode=" + barcode +
+                ", productsInPantry=" + productsInPantry +
+                '}';
     }
 }
