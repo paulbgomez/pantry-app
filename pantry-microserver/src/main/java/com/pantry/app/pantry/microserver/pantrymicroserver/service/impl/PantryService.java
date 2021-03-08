@@ -4,7 +4,6 @@ import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.ProductInPantry;
 import com.pantry.app.pantry.microserver.pantrymicroserver.repository.PantryRepository;
 import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IPantryService;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigInteger;
 import java.util.*;
 
 @Service
@@ -26,7 +24,7 @@ public class PantryService implements IPantryService {
     UserClient userClient;
 
     private Pantry checkPantry(Long id){
-        Pantry pantry = new Pantry();
+        Pantry pantry;
         if (pantryRepository.existsById(id)){
             pantry = pantryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found"));
             return pantry;

@@ -8,7 +8,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.ProductInPantry;
 
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;

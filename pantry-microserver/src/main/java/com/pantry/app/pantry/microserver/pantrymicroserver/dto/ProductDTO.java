@@ -1,13 +1,9 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pantry.app.pantry.microserver.pantrymicroserver.enums.Category;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.ProductInPantry;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 

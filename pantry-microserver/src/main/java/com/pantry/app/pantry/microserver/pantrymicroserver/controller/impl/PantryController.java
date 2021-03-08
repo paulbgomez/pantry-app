@@ -1,20 +1,12 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 
-import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
 import com.pantry.app.pantry.microserver.pantrymicroserver.controller.interfaces.IPantryController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
-import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.ProductInPantry;
-import com.pantry.app.pantry.microserver.pantrymicroserver.repository.PantryRepository;
-import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;
 import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IPantryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import java.math.BigInteger;
+
 import java.util.*;
 
 @RestController

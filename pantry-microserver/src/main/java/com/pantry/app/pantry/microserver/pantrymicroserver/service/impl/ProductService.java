@@ -1,4 +1,60 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.service.impl;
 
-public class ProductService {
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
+import com.pantry.app.pantry.microserver.pantrymicroserver.enums.Category;
+import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
+import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
+import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;
+import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class ProductService implements IProductService {
+
+    @Autowired
+    ProductRepository productRepository;
+
+    private Product checkProduct(Long id){
+        Product product;
+        if (productRepository.existsById(id)){
+            product = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+            return product;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+        }
+    }
+
+    public ProductDTO findById(Long id) {
+        return new ProductDTO(checkProduct(id));
+    }
+
+    public List<ProductDTO> findAll() {
+        List<Product> products = productRepository.findAll();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product: products) {
+            productDTOList.add(new ProductDTO(product));
+        }
+        return productDTOList;
+    }
+
+    public ProductDTO add(ProductDTO productDTO) {
+        Product product = new Product(
+                productDTO.getName(),
+                Category.valueOf(productDTO.getCategory()),
+                productDTO.getBarcode()
+        );
+        productRepository.save(product);
+        return new ProductDTO(product);
+    }
+
+    public void delete(Long id) {
+        productRepository.delete(checkProduct(id));
+    }
 }
