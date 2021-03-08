@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import javax.validation.Valid;
+import java.util.List;
 
+@CrossOrigin
 @RestController
 public class PantryController implements IPantryController {
 
@@ -29,14 +31,13 @@ public class PantryController implements IPantryController {
 
     @PostMapping("pantry/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PantryDTO add(@RequestBody PantryDTO pantryDTO, @PathVariable Long id){
+    public PantryDTO add(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id){
         return pantryService.add(pantryDTO, id);
     }
 
-
     @DeleteMapping("pantry/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id, @RequestBody PantryDTO pantryDTO){
+    public void delete(@PathVariable Long id, @RequestBody @Valid PantryDTO pantryDTO){
         pantryService.delete(id, pantryDTO);
     }
 

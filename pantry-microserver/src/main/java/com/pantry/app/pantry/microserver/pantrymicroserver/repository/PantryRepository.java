@@ -1,8 +1,6 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.repository;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.ProductInPantry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

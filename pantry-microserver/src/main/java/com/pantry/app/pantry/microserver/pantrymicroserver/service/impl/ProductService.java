@@ -1,9 +1,7 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.service.impl;
 
-import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.enums.Category;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
 import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;
 import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IProductService;

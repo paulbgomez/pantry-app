@@ -2,16 +2,15 @@ package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.controller.interfaces.IProductController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
-import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
-import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;
 import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class ProductController implements IProductController {
 
@@ -32,7 +31,7 @@ public class ProductController implements IProductController {
 
     @PostMapping("product")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO add(@RequestBody ProductDTO productDTO){
+    public ProductDTO add(@RequestBody @Valid ProductDTO productDTO){
         return productService.add(productDTO);
     }
 
