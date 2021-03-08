@@ -29,8 +29,10 @@ public class PantryService implements IPantryService {
         Pantry pantry = new Pantry();
         if (pantryRepository.existsById(id)){
             pantry = pantryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found"));
+            return pantry;
+        } else {
+         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found");
         }
-        return pantry;
     }
 
     private UserDTO checkUser(Long id) {
@@ -93,7 +95,6 @@ public class PantryService implements IPantryService {
         return new PantryDTO(pantry);
     }
 
-    @Override
     public void delete(Long id, PantryDTO pantryDTO) {
         UserDTO userDTO = checkUser(id);
         List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(userDTO.getId());
@@ -101,16 +102,16 @@ public class PantryService implements IPantryService {
                 .findAny().orElse(null)));
     }
 
-    @Override
     public void updatePantry(Long pantryId, Long productId, Integer quantity) {
-        for (ProductInPantry product: checkPantry(pantryId).getProductsInPantry()){
+        Pantry pantry = checkPantry(pantryId);
+        for (ProductInPantry product: pantry.getProductsInPantry()){
             if(product.getProduct().getId().equals(productId)){
                 product.setQuantity(quantity);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
             }
         }
-        pantryRepository.save(checkPantry(pantryId));
+        pantryRepository.save(pantry);
     }
 
 }
