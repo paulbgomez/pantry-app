@@ -1,8 +1,7 @@
-package com.pantry.app.user.microserver.usermicroserver.controller.interfaces;
+package com.pantry.app.edgeservice.controller.interfaces;
 
-import com.pantry.app.user.microserver.usermicroserver.dto.PantryDTO;
-import com.pantry.app.user.microserver.usermicroserver.dto.UserDTO;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.pantry.app.edgeservice.dto.PantryDTO;
+import com.pantry.app.edgeservice.dto.UserDTO;
 
 public interface IUserController {
 

@@ -20,13 +20,7 @@ public class ProductService implements IProductService {
     ProductRepository productRepository;
 
     private Product checkProduct(Long id){
-        Product product;
-        if (productRepository.existsById(id)){
-            product = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
-            return product;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
-        }
+       return productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
     }
 
     public ProductDTO findById(Long id) {

@@ -14,11 +14,17 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${animalcnh.app.secretjwt}")
+    @Value("${pantry.app.secretjwt}")
     private String secretJwt;
 
-    @Value("${animalcnh.app.expirationjwt}")
+    @Value("${pantry.app.expirationjwt}")
     private int expirationJwt;
+
+    /*
+    -generate a JWT from username, date, expiration, secret
+    -get username from JWT
+    -validate JWT
+     */
 
     public String extractUsername(String token) {
         return Jwts.parser().setSigningKey(secretJwt).parseClaimsJws(token).getBody().getSubject();

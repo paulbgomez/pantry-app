@@ -11,6 +11,7 @@ import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -33,8 +34,8 @@ public class RegistrationRoutine {
         if (!isUserRegistered) {
             CircuitBreaker circuitBreaker = circuitBreakerFactory.create("user-service");
             log.info("Trying to register with user-service {}", dateFormat.format(new Date()));
-            AuthenticationRequest authenticationRequest = new AuthenticationRequest("gateway", "gateway");
-            ResponseEntity<?> responseEntity = circuitBreaker.run(() -> userClient.createAuthenticationToken(authenticationRequest), throwable -> fallbackTransaction("user-service"));
+            AuthenticationRequest authenticationRequest = new AuthenticationRequest("edge-service", "edge-service");
+            ResponseEntity<?> responseEntity = userClient.createAuthenticationToken(authenticationRequest);
             if (responseEntity != null) {
                 parseJWT(responseEntity);
                 isUserRegistered = true;
@@ -48,8 +49,8 @@ public class RegistrationRoutine {
         AuthController.setUserAuthOk(auth.substring(5, auth.length() - 1));
         }
 
-    private ResponseEntity<?> fallbackTransaction(String serviceName) {
-        log.info(serviceName + " is not reachable {}", dateFormat.format(new Date()));
+    private ResponseEntity<?> fallbackTransaction() {
+        log.info("user-service" + " is not reachable {}", dateFormat.format(new Date()));
         return null;
         }
 }

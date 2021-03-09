@@ -2,12 +2,11 @@ package com.pantry.app.edgeservice.controller.impl;
 
 import com.pantry.app.edgeservice.auth.security.AuthenticationRequest;
 import com.pantry.app.edgeservice.auth.security.AuthenticationResponse;
-import com.pantry.app.edgeservice.auth.security.MyUserDetailsService;
 import com.pantry.app.edgeservice.auth.security.JwtUtils;
+import com.pantry.app.edgeservice.auth.security.MyUserDetailsService;
 import com.pantry.app.edgeservice.clients.UserClient;
-import com.pantry.app.edgeservice.model.Role;
-import com.pantry.app.edgeservice.model.User;
-import com.pantry.app.edgeservice.repository.UserRepository;
+import com.pantry.app.edgeservice.dto.RoleDTO;
+import com.pantry.app.edgeservice.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -36,7 +37,7 @@ public class AuthController {
 
     private static String userAuthOk;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         Authentication authentication;
@@ -56,20 +57,33 @@ public class AuthController {
         final String jwt = jwtUtils.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
+
+        /*
+                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles));
+         */
     }
 
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/signup", method = RequestMethod.POST)
     public ResponseEntity<?> registerAndCreateToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-        if (userRepository.existsByUsername(authenticationRequest.getUsername())) {
+        if (userClient.alreadyExistsUserWithUsername(authenticationRequest.getUsername(), "Bearer " + getUserAuthOk())) {
             return ResponseEntity.badRequest().body("Username is already taken");
         }
 
-        User user = new User(authenticationRequest.getUsername(),
+        UserDTO user = new UserDTO(authenticationRequest.getUsername(),
                              authenticationRequest.getPassword());
-        user.setRole(new Role("USER", user));
+        user.setRole(new RoleDTO("USER", user));
 
-        userRepository.save(user);
+        userClient.add(user, "Bearer " + getUserAuthOk());
 
         return ResponseEntity.ok("User registered successfully!");
     }

@@ -1,7 +1,6 @@
 package com.pantry.app.edgeservice.auth.security;
 
-import com.pantry.app.edgeservice.model.Role;
-import com.pantry.app.edgeservice.model.User;
+import com.pantry.app.edgeservice.dto.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,9 +10,9 @@ import java.util.HashSet;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+    private final UserDTO user;
 
-    public CustomUserDetails(User user) {
+    public CustomUserDetails(UserDTO user) {
         this.user = user;
     }
 
@@ -22,8 +21,7 @@ public class CustomUserDetails implements UserDetails {
 
         Collection<GrantedAuthority> authorities = new HashSet<>();
 
-        Role role = user.getRole();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getStatus()));
 
         return authorities;
     }

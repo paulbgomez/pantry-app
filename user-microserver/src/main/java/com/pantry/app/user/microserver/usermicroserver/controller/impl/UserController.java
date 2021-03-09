@@ -29,6 +29,18 @@ public class UserController implements IUserController {
         return userService.findById(id);
     }
 
+    @GetMapping("user/check-email/{email}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean alreadyExistsUserWithEmail(@PathVariable String email){
+        return userService.alreadyRegisteredEmail(email);
+    }
+
+    @GetMapping("user/check-username/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean alreadyExistsUserWithUsername(@PathVariable String username){
+        return userService.alreadyRegisteredUsername(username);
+    }
+
     @PostMapping("user")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO add(@RequestBody @Valid UserDTO userDTO){

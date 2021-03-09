@@ -11,5 +11,6 @@ public interface IUserService {
     void delete(Long id);
     PantryDTO createPantry(PantryDTO pantryDTO, Long id);
     void update(Long id, UserDTO userDTO);
-
+    boolean alreadyRegisteredEmail(String email);
+    boolean alreadyRegisteredUsername(String username);
 }

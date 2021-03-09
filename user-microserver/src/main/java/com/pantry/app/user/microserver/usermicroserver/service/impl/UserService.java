@@ -74,6 +74,14 @@ public class UserService implements IUserService {
 
     }
 
+    public boolean alreadyRegisteredEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
+
+    public boolean alreadyRegisteredUsername(String username){
+        return userRepository.existsByUsername(username);
+    }
+
     public PantryDTO createPantry(PantryDTO pantryDTO, Long id) {
         User user = userExists(id);
        return pantryClient.add(pantryDTO, id);
