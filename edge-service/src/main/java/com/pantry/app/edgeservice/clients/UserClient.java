@@ -4,7 +4,6 @@ import com.pantry.app.edgeservice.auth.security.AuthenticationRequest;
 import com.pantry.app.edgeservice.dto.PantryDTO;
 import com.pantry.app.edgeservice.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

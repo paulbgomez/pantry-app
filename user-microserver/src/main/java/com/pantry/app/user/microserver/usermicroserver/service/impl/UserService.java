@@ -1,6 +1,7 @@
 package com.pantry.app.user.microserver.usermicroserver.service.impl;
 
 import com.pantry.app.user.microserver.usermicroserver.clients.PantryClient;
+import com.pantry.app.user.microserver.usermicroserver.controller.impl.AuthController;
 import com.pantry.app.user.microserver.usermicroserver.dto.PantryDTO;
 import com.pantry.app.user.microserver.usermicroserver.dto.UserDTO;
 import com.pantry.app.user.microserver.usermicroserver.enums.Status;
@@ -84,6 +85,6 @@ public class UserService implements IUserService {
 
     public PantryDTO createPantry(PantryDTO pantryDTO, Long id) {
         User user = userExists(id);
-       return pantryClient.add(pantryDTO, id);
+       return pantryClient.add(pantryDTO, id, "Bearer " + AuthController.getPantryAuthOk());
     }
 }

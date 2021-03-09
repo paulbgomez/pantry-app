@@ -7,6 +7,7 @@ import com.pantry.app.edgeservice.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.ws.rs.Path;
 
 @RestController
@@ -23,22 +24,22 @@ public class UserController implements IUserController {
     }
 
     @GetMapping("/user/{username}")
-    public UserDTO getUserByUsername(String username) {
+    public UserDTO getUserByUsername(@PathVariable String username) {
         return userClient.getUserByUsername(username, "Bearer " + getUserAuthOk());
     }
 
     @PostMapping("user")
-    public UserDTO add(UserDTO userDTO) {
+    public UserDTO add(@RequestBody UserDTO userDTO) {
         return userClient.add(userDTO, "Bearer " + getUserAuthOk());
     }
 
     @DeleteMapping("user/{id}")
-    public void delete(Long id) {
+    public void delete(@PathVariable Long id) {
         userClient.delete(id,"Bearer " + getUserAuthOk());
     }
 
     @PostMapping("user/new-pantry/{id}")
-    public PantryDTO createPantry(PantryDTO pantryDTO, Long id) {
+    public PantryDTO createPantry(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id) {
         return userClient.createPantry(pantryDTO, id, "Bearer " + getUserAuthOk());
     }
 
@@ -47,13 +48,13 @@ public class UserController implements IUserController {
         userClient.modify(id, userDTO, "Bearer " + getUserAuthOk());
     }
 
-    @Override
-    public boolean alreadyExistsUserWithEmail(String email) {
+    @GetMapping("user/check-email/{email}")
+    public boolean alreadyExistsUserWithEmail(@PathVariable String email) {
         return userClient.alreadyExistsUserWithEmail(email, "Bearer " + getUserAuthOk());
     }
 
-    @Override
-    public boolean alreadyExistsUserWithUsername(String username) {
+    @GetMapping("user/check-username/{username}")
+    public boolean alreadyExistsUserWithUsername(@PathVariable String username) {
         return userClient.alreadyExistsUserWithUsername(username, "Bearer " + getUserAuthOk());
     }
 

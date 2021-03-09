@@ -19,25 +19,25 @@ public class ProductController implements IProductController {
 
     @GetMapping("product/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductDTO findById(@PathVariable Long id){
+    public ProductDTO findProductById(@PathVariable Long id){
         return productService.findById(id);
     }
 
     @GetMapping("product")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDTO> findAll(){
+    public List<ProductDTO> findAllProducts(){
         return productService.findAll();
     }
 
     @PostMapping("product")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO add(@RequestBody @Valid ProductDTO productDTO){
+    public ProductDTO addProduct(@RequestBody @Valid ProductDTO productDTO){
         return productService.add(productDTO);
     }
 
     @DeleteMapping("product/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){
+    public void deleteProduct(@PathVariable Long id){
         productService.delete(id);
     }
 }

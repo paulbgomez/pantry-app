@@ -1,10 +1,11 @@
-package com.pantry.app.pantry.microserver.pantrymicroserver.controller.interfaces;
+package com.pantry.app.edgeservice.controller.interfaces;
 
-import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
+import com.pantry.app.edgeservice.dto.ProductDTO;
 
 import java.util.List;
 
 public interface IProductController {
+
     ProductDTO findProductById(Long id);
 
     List<ProductDTO> findAllProducts();

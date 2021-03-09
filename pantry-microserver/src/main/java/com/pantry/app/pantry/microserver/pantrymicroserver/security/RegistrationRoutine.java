@@ -1,8 +1,8 @@
-package com.pantry.app.user.microserver.usermicroserver.security;
+package com.pantry.app.pantry.microserver.pantrymicroserver.security;
 
-import com.pantry.app.user.microserver.usermicroserver.clients.PantryClient;
-import com.pantry.app.user.microserver.usermicroserver.controller.impl.AuthController;
-import com.pantry.app.user.microserver.usermicroserver.dto.AuthenticationRequest;
+import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
+import com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl.AuthController;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.AuthenticationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Objects;
 public class RegistrationRoutine {
 
     @Autowired
-    PantryClient pantryClient;
+    UserClient userClient;
 
     public static boolean isPantryClientRegistered = false;
 
@@ -34,22 +34,22 @@ public class RegistrationRoutine {
     @Scheduled(fixedRate = 10000)
     public void checkRegistrationValidation() {
             if (!isPantryClientRegistered){
-                CircuitBreaker circuitBreaker = circuitBreakerFactory.create("pantry-service");
-                log.info("Trying to register with pantry-service {}", dateFormat.format(new Date()));
-                AuthenticationRequest authenticationRequest = new AuthenticationRequest("user-service", "user-service");
-                ResponseEntity<?> responseEntity= circuitBreaker.run(() -> pantryClient.createAuthenticationToken(authenticationRequest), throwable -> fallbackTransaction("pantry-service"));
+                CircuitBreaker circuitBreaker = circuitBreakerFactory.create("user-service");
+                log.info("Trying to register with user-service {}", dateFormat.format(new Date()));
+                AuthenticationRequest authenticationRequest = new AuthenticationRequest("pantry-service", "pantry-service");
+                ResponseEntity<?> responseEntity= circuitBreaker.run(() -> userClient.createAuthenticationToken(authenticationRequest), throwable -> fallbackTransaction("user-service"));
                 if (responseEntity != null) {
-                    parseJWTPantry(responseEntity);
+                    parseJWTUser(responseEntity);
                     isPantryClientRegistered = true;
-                    log.info("Registered with pantry-service auth token: {}", AuthController.getPantryAuthOk());
+                    log.info("Registered with user-service auth token: {}", AuthController.getUserAuthOk());
                 }
             }
     }
 
 
-    private void parseJWTPantry(ResponseEntity<?> responseEntity) {
+    private void parseJWTUser(ResponseEntity<?> responseEntity) {
         String auth = Objects.requireNonNull(responseEntity.getBody()).toString();
-        AuthController.setPantryAuthOk(auth.substring(5, auth.length() - 1));
+        AuthController.setUserAuthOk(auth.substring(5, auth.length() - 1));
     }
 
 

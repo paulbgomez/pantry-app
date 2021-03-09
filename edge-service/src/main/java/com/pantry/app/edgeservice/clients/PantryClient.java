@@ -1,8 +1,9 @@
-package com.pantry.app.user.microserver.usermicroserver.clients;
+package com.pantry.app.edgeservice.clients;
 
-import com.pantry.app.user.microserver.usermicroserver.dto.AuthenticationRequest;
-import com.pantry.app.user.microserver.usermicroserver.dto.PantryDTO;
-import com.pantry.app.user.microserver.usermicroserver.dto.ProductDTO;
+import com.pantry.app.edgeservice.auth.security.AuthenticationRequest;
+import com.pantry.app.edgeservice.dto.PantryDTO;
+
+import com.pantry.app.edgeservice.dto.ProductDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,9 @@
-package com.pantry.app.user.microserver.usermicroserver.controller.impl;
+package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 
-import com.pantry.app.user.microserver.usermicroserver.dto.AuthenticationRequest;
-import com.pantry.app.user.microserver.usermicroserver.dto.AuthenticationResponse;
-import com.pantry.app.user.microserver.usermicroserver.security.MyUserDetailsService;
-import com.pantry.app.user.microserver.usermicroserver.utils.JwtUtil;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.AuthenticationRequest;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.AuthenticationResponse;
+import com.pantry.app.pantry.microserver.pantrymicroserver.security.MyUserDetailsService;
+import com.pantry.app.pantry.microserver.pantrymicroserver.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,10 +26,10 @@ public class AuthController {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
-    private static String pantryAuthOk;
+    private static String userAuthOk;
 
     /** AUTHENTICATION **/
-    @PostMapping("/user/authenticate")
+    @PostMapping("/pantry/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         try {
@@ -42,6 +42,7 @@ public class AuthController {
             throw new Exception("Incorrect username or password", e);
         }
 
+
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
@@ -50,11 +51,11 @@ public class AuthController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
-    public static String getPantryAuthOk() {
-        return pantryAuthOk;
+    public static String getUserAuthOk() {
+        return userAuthOk;
     }
 
-    public static void setPantryAuthOk(String pantryAuthOk) {
-        AuthController.pantryAuthOk = pantryAuthOk;
+    public static void setUserAuthOk(String userAuthOk) {
+        AuthController.userAuthOk = userAuthOk;
     }
 }

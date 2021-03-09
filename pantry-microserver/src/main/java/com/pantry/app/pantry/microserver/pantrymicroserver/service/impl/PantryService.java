@@ -1,6 +1,7 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.service.impl;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
+import com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl.AuthController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
@@ -30,7 +31,7 @@ public class PantryService implements IPantryService {
     }
 
     private UserDTO checkUser(Long id) {
-        UserDTO user = userClient.getUserById(id);
+        UserDTO user = userClient.getUserById(id, "Bearer " + AuthController.getUserAuthOk());
         if (user.getId().equals(id)) {
             return user;
         } else {
