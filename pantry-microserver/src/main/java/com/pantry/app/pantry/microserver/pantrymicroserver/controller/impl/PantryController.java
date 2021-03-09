@@ -41,7 +41,7 @@ public class PantryController implements IPantryController {
         pantryService.delete(id, pantryDTO);
     }
 
-    @PatchMapping("pantry/{pantryId}/{productId}={quantity}")
+    @PatchMapping("pantry/{pantryId}/{productId}/{quantity}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity){
        pantryService.updatePantry(pantryId, productId, quantity);

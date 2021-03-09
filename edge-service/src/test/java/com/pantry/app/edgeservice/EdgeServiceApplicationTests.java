@@ -1,10 +1,10 @@
-package com.pantry.app.product.microserver.productmicroserver;
+package com.pantry.app.edgeservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductMicroserverApplicationTests {
+class EdgeServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

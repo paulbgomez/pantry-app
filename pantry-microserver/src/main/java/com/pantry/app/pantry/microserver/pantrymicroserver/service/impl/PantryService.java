@@ -25,14 +25,8 @@ public class PantryService implements IPantryService {
     @Autowired
     UserClient userClient;
 
-    private Pantry checkPantry(Long id){
-        Pantry pantry;
-        if (pantryRepository.existsById(id)){
-            pantry = pantryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found"));
-            return pantry;
-        } else {
-         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found");
-        }
+    private Pantry checkPantry(Long id) {
+        return pantryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found"));
     }
 
     private UserDTO checkUser(Long id) {
