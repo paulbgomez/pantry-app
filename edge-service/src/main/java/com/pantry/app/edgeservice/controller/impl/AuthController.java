@@ -17,8 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @CrossOrigin
 @RestController
 public class AuthController {
@@ -35,7 +33,6 @@ public class AuthController {
     @Autowired
     UserClient userClient;
 
-    private static String userAuthOk;
 
     @RequestMapping(value = "/auth/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -44,8 +41,10 @@ public class AuthController {
         try {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+
         }
         catch (BadCredentialsException e) {
+
             throw new Exception("Invalid username or password", e);
         }
 
@@ -72,29 +71,22 @@ public class AuthController {
          */
     }
 
-
     @RequestMapping(value = "/auth/signup", method = RequestMethod.POST)
     public ResponseEntity<?> registerAndCreateToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-        if (userClient.alreadyExistsUserWithUsername(authenticationRequest.getUsername(), "Bearer " + getUserAuthOk())) {
+
+        if (userClient.alreadyExistsUserWithUsername(authenticationRequest.getUsername(), "Bearer " + UserController.getUserAuthOk())) {
             return ResponseEntity.badRequest().body("Username is already taken");
         }
 
         UserDTO user = new UserDTO(authenticationRequest.getUsername(),
-                             authenticationRequest.getPassword());
-        user.setRole(new RoleDTO("USER", user));
+                                    authenticationRequest.getPassword());
 
-        userClient.add(user, "Bearer " + getUserAuthOk());
+        //user.setRole(new RoleDTO("USER", user));
+
+        userClient.add(user, "Bearer " + UserController.getUserAuthOk());
 
         return ResponseEntity.ok("User registered successfully!");
     }
 
-
-    public static String getUserAuthOk() {
-        return userAuthOk;
-    }
-
-    public static void setUserAuthOk(String userAuthOk) {
-        AuthController.userAuthOk = userAuthOk;
-    }
 
 }

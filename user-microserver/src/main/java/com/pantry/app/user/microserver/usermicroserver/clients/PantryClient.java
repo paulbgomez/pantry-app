@@ -13,31 +13,31 @@ import java.util.List;
 @FeignClient("pantry-service")
 public interface PantryClient {
 
-    @PostMapping("pantry/{id}")
+    @PostMapping("/pantry/{id}")
     PantryDTO add(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @GetMapping("pantry/all/{id}")
+    @GetMapping("/pantry/all/{id}")
     List<PantryDTO> findAll(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @GetMapping("pantry/{id}")
+    @GetMapping("/pantry/{id}")
     PantryDTO getPantryById(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @DeleteMapping("pantry/{id}")
+    @DeleteMapping("/pantry/{id}")
     void delete(@PathVariable Long id, @RequestBody @Valid PantryDTO pantryDTO, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @PatchMapping("pantry/{pantryId}/{productId}/{quantity}")
+    @PatchMapping("/pantry/{pantryId}/{productId}/{quantity}")
     void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @GetMapping("product/{id}")
+    @GetMapping("/product/{id}")
     ProductDTO findProductById(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @GetMapping("product")
+    @GetMapping("/product")
     List<ProductDTO> findAllProducts(@RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @PostMapping("product")
+    @PostMapping("/product")
     ProductDTO addProduct(@RequestBody @Valid ProductDTO productDTO, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @DeleteMapping("product/{id}")
+    @DeleteMapping("/product/{id}")
     void deleteProduct(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @PostMapping("/pantry/authenticate")

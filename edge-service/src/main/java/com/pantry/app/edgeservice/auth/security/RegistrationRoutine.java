@@ -1,7 +1,10 @@
 package com.pantry.app.edgeservice.auth.security;
 
+import com.pantry.app.edgeservice.clients.PantryClient;
 import com.pantry.app.edgeservice.clients.UserClient;
 import com.pantry.app.edgeservice.controller.impl.AuthController;
+import com.pantry.app.edgeservice.controller.impl.PantryController;
+import com.pantry.app.edgeservice.controller.impl.UserController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,11 @@ public class RegistrationRoutine {
     @Autowired
     UserClient userClient;
 
+    @Autowired
+    PantryClient pantryClient;
+
     public static boolean isUserRegistered = false;
+    public static boolean isPantryRegistered = false;
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationRoutine.class);
 
@@ -39,15 +46,35 @@ public class RegistrationRoutine {
             if (responseEntity != null) {
                 parseJWT(responseEntity);
                 isUserRegistered = true;
-                log.info("Registered with user-service auth token: {}", AuthController.getUserAuthOk());
+                log.info("Registered with user-service auth token: {}", UserController.getUserAuthOk());
             }
         }
     }
 
     private void parseJWT(ResponseEntity<?> responseEntity) {
         String auth = Objects.requireNonNull(responseEntity.getBody()).toString();
-        AuthController.setUserAuthOk(auth.substring(5, auth.length() - 1));
+        UserController.setUserAuthOk(auth.substring(5, auth.length() - 1));
         }
+
+    @Scheduled(fixedRate = 10000)
+    public void checkPantryRegistration() {
+        if (!isPantryRegistered) {
+            CircuitBreaker circuitBreaker = circuitBreakerFactory.create("pantry-service");
+            log.info("Trying to register with pantry-service {}", dateFormat.format(new Date()));
+            AuthenticationRequest authenticationRequest = new AuthenticationRequest("edge-service", "edge-service");
+            ResponseEntity<?> responseEntity = pantryClient.createAuthenticationToken(authenticationRequest);
+            if (responseEntity != null) {
+                parseJWTPantry(responseEntity);
+                isPantryRegistered = true;
+                log.info("Registered with pantry-service auth token: {}", PantryController.getPantryAuthOk());
+            }
+        }
+    }
+
+    private void parseJWTPantry(ResponseEntity<?> responseEntity) {
+        String auth = Objects.requireNonNull(responseEntity.getBody()).toString();
+        PantryController.setPantryAuthOk(auth.substring(5, auth.length() - 1));
+    }
 
     private ResponseEntity<?> fallbackTransaction() {
         log.info("user-service" + " is not reachable {}", dateFormat.format(new Date()));

@@ -5,6 +5,7 @@ import com.pantry.app.user.microserver.usermicroserver.model.User;
 
 import javax.validation.constraints.NotNull;
 
+
 public class UserDTO {
 
     private Long id;
@@ -12,16 +13,14 @@ public class UserDTO {
     private String username;
     @NotNull
     private String password;
-    @NotNull
     private String email;
     private String name;
-    @NotNull
     private RoleDTO role;
 
     public UserDTO() {
     }
 
-    public UserDTO(@NotNull String username, @NotNull String password) {
+    public UserDTO(@NotNull  String username, @NotNull  String password) {
         this.username = username;
         this.password = password;
     }
@@ -32,15 +31,6 @@ public class UserDTO {
         setPassword(user.getPassword());
         setEmail(user.getEmail());
         setName(user.getName());
-    }
-
-    public UserDTO(Long id, @NotNull String username, @NotNull String password, @NotNull String email, String name, @NotNull RoleDTO role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.role = role;
     }
 
     public Long getId() {

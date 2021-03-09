@@ -34,9 +34,7 @@ public class UserService implements IUserService {
         }
     }
 
-    public UserDTO findById(Long id) {
-        return new UserDTO(userExists(id));
-    }
+    public UserDTO findById(Long id) { return new UserDTO(userExists(id)); }
 
     public UserDTO findByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
@@ -48,16 +46,15 @@ public class UserService implements IUserService {
     }
 
     public UserDTO add(UserDTO userDTO) {
-       User user = new User(
+        User user = new User(
                userDTO.getUsername(),
-               userDTO.getPassword(),
-               userDTO.getEmail(),
-               userDTO.getName()
+               userDTO.getPassword()
        );
        Role role = new Role(Status.USER, user);
        user.setRole(role);
+        System.out.println("Aqui añado el rol");
        userRepository.save(user);
-       return new UserDTO(user);
+       return userDTO;
     }
 
     public void update(Long id, UserDTO userDTO) {

@@ -17,49 +17,49 @@ public class UserController implements IUserController {
     @Autowired
     IUserService userService;
 
-    @GetMapping("user/username/{username}")
+    @GetMapping("/user/username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getUserByUsername(@PathVariable String username){
         return userService.findByUsername(username);
     }
 
-    @GetMapping("user/{id}")
+    @GetMapping("/user/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getUserById(@PathVariable Long id){
         return userService.findById(id);
     }
 
-    @GetMapping("user/check-email/{email}")
+    @GetMapping("/user/check-email/{email}")
     @ResponseStatus(HttpStatus.OK)
     public boolean alreadyExistsUserWithEmail(@PathVariable String email){
         return userService.alreadyRegisteredEmail(email);
     }
 
-    @GetMapping("user/check-username/{username}")
+    @GetMapping("/user/check-username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public boolean alreadyExistsUserWithUsername(@PathVariable String username){
         return userService.alreadyRegisteredUsername(username);
     }
 
-    @PostMapping("user")
+    @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO add(@RequestBody @Valid UserDTO userDTO){
         return userService.add(userDTO);
     }
 
-    @PutMapping("user/{id}")
+    @PutMapping("/user/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void modify(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO){
         userService.update(id, userDTO);
     }
 
-    @DeleteMapping("user/{id}")
+    @DeleteMapping("/user/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         userService.delete(id);
     }
 
-    @PostMapping("user/new-pantry/{id}")
+    @PostMapping("/user/new-pantry/{id}")
     public PantryDTO createPantry(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id) {
         return userService.createPantry(pantryDTO, id);
     }

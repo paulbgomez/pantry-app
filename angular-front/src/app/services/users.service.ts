@@ -10,11 +10,11 @@ export class UsersService {
   constructor(private http: HttpClient, private cookies: CookieService) {}
 
   login(user: {username: string, password: string}): Observable<any> {
-    return this.http.post('http://localhost:8080/login', user);
+    return this.http.post('http://localhost:8081/auth/signin', user);
   }
 
   register(user: {username: string, password: string}): Observable<any> {
-    return this.http.post('http://localhost:8080/signup', user, {responseType: 'text'});
+    return this.http.post('http://localhost:8081/auth/signup', user, {responseType: 'text'});
   }
 
   setToken(token: string): void {

@@ -4,9 +4,7 @@ import com.pantry.app.edgeservice.clients.PantryClient;
 import com.pantry.app.edgeservice.controller.interfaces.IPantryController;
 import com.pantry.app.edgeservice.dto.PantryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
