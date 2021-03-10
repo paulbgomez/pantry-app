@@ -1,5 +1,6 @@
 package com.pantry.app.user.microserver.usermicroserver.model;
 
+import com.pantry.app.user.microserver.usermicroserver.dto.RoleDTO;
 import com.pantry.app.user.microserver.usermicroserver.enums.Status;
 
 import javax.persistence.*;
@@ -32,6 +33,15 @@ public class Role {
     public Role(Status status, User user) {
         setStatus(status);
         this.user = user;
+    }
+
+    public Role(Status status){
+        setStatus(status);
+    }
+
+    public Role(RoleDTO roleDTO) {
+        setStatus(Status.valueOf(roleDTO.getStatus()));
+        setUser(new User(roleDTO.getUserDTO()));
     }
 
     /**------------------------Getters and Setters------------------------**/

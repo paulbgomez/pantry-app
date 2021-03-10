@@ -10,10 +10,14 @@ public class RoleDTO {
     public RoleDTO() {
     }
 
-    public RoleDTO(String status, UserDTO userDTO) {
+    public RoleDTO(String status){
         this.status = status;
-        this.userDTO = userDTO;
     }
+
+//    public RoleDTO(String status, UserDTO userDTO) {
+//        this.status = status;
+//        this.userDTO = userDTO;
+//    }
 
     public String getStatus() {
         return status;

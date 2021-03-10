@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ export class UsersService {
   constructor(private http: HttpClient, private cookies: CookieService) {}
 
   login(user: {username: string, password: string}): Observable<any> {
-    return this.http.post('http://localhost:8081/auth/signin', user);
+    return this.http.post(environment.host + '/auth/signin', user);
   }
 
   register(user: {username: string, password: string}): Observable<any> {
-    return this.http.post('http://localhost:8081/auth/signup', user, {responseType: 'text'});
+    return this.http.post(environment.host + '/auth/signup', user, {responseType: 'text'});
   }
 
   setToken(token: string): void {

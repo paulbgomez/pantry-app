@@ -1,5 +1,6 @@
 package com.pantry.app.user.microserver.usermicroserver.model;
 
+import com.pantry.app.user.microserver.usermicroserver.dto.UserDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -31,11 +32,17 @@ public class User {
     }
 
     /**
-     * Class constructor specifying name, username and password.
+     * Class constructor specifying username and password.
      **/
     public User(String username, String password) {
         this.username = username;
         setPassword(password);
+    }
+
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     /**
@@ -47,6 +54,15 @@ public class User {
         setPassword(password);
         this.email = email;
         this.name = name;
+    }
+
+    public User(UserDTO userDTO) {
+//        setId(userDTO.getId());
+        setUsername(userDTO.getUsername());
+        setPassword(userDTO.getPassword());
+        setRole(new Role(userDTO.getRole()));
+//        setEmail(userDTO.getEmail());
+//        setName(userDTO.getName());
     }
 
     /**------------------------Getters and Setters------------------------**/

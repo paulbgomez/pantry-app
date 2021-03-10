@@ -3,6 +3,7 @@ package com.pantry.app.user.microserver.usermicroserver.service.impl;
 import com.pantry.app.user.microserver.usermicroserver.clients.PantryClient;
 import com.pantry.app.user.microserver.usermicroserver.controller.impl.AuthController;
 import com.pantry.app.user.microserver.usermicroserver.dto.PantryDTO;
+import com.pantry.app.user.microserver.usermicroserver.dto.RoleDTO;
 import com.pantry.app.user.microserver.usermicroserver.dto.UserDTO;
 import com.pantry.app.user.microserver.usermicroserver.enums.Status;
 import com.pantry.app.user.microserver.usermicroserver.model.Role;
@@ -46,14 +47,18 @@ public class UserService implements IUserService {
     }
 
     public UserDTO add(UserDTO userDTO) {
+        System.out.println("User service line 49");
         User user = new User(
-               userDTO.getUsername(),
-               userDTO.getPassword()
-       );
-       Role role = new Role(Status.USER, user);
+                userDTO.getUsername(),
+                userDTO.getPassword());
+        System.out.println("User service line 53");
+        RoleDTO roleDTO = userDTO.getRole();
+        System.out.println("User service line 56");
+        Role role = new Role(Status.valueOf(roleDTO.getStatus()), user);
+//       Role role = new Role(Status.USER, user);
        user.setRole(role);
-        System.out.println("Aqui añado el rol");
-       userRepository.save(user);
+        System.out.println("User service line 60");
+        userRepository.save(user);
        return userDTO;
     }
 

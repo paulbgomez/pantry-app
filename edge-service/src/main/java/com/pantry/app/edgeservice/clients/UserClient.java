@@ -15,7 +15,7 @@ public interface UserClient {
     UserDTO getUserByUsername(@PathVariable String username, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @PostMapping("/user")
-    UserDTO add(@RequestBody @Valid UserDTO userDTO, @RequestHeader(value = "Authorization") String authorizationHeader);
+    UserDTO add(@RequestBody UserDTO userDTO, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @GetMapping("/user/check-email/{email}")
     boolean alreadyExistsUserWithEmail(@PathVariable String email, @RequestHeader(value = "Authorization") String authorizationHeader);

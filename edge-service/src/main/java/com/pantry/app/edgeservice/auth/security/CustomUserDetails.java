@@ -1,5 +1,6 @@
 package com.pantry.app.edgeservice.auth.security;
 
+import com.pantry.app.edgeservice.dto.RoleDTO;
 import com.pantry.app.edgeservice.dto.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +22,10 @@ public class CustomUserDetails implements UserDetails {
 
         Collection<GrantedAuthority> authorities = new HashSet<>();
 
+        if(user.getRole() == null){
+            user.setRole(new RoleDTO("USER"));
+        }
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getStatus()));
-
         return authorities;
     }
 

@@ -39,6 +39,7 @@ public class AuthController {
 
         Authentication authentication;
         try {
+            System.out.println("Auth line 42");
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
@@ -48,27 +49,20 @@ public class AuthController {
             throw new Exception("Invalid username or password", e);
         }
 
+        System.out.println("Auth line 53 " + authentication.getPrincipal());
+        System.out.println("Auth line 55 " + authentication.getName());
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
+
         final String jwt = jwtUtils.generateToken(userDetails);
 
+        System.out.println(jwt + "Auth line 64");
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
 
-        /*
-                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
-         */
     }
 
     @RequestMapping(value = "/auth/signup", method = RequestMethod.POST)
@@ -78,10 +72,11 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Username is already taken");
         }
 
-        UserDTO user = new UserDTO(authenticationRequest.getUsername(),
-                                    authenticationRequest.getPassword());
+        RoleDTO roleDTO = new RoleDTO("USER");
 
-        //user.setRole(new RoleDTO("USER", user));
+        UserDTO user = new UserDTO(authenticationRequest.getUsername(),
+                                    authenticationRequest.getPassword(),
+                                    roleDTO);
 
         userClient.add(user, "Bearer " + UserController.getUserAuthOk());
 

@@ -6,11 +6,15 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { MyPantriesComponent } from './components/my-pantries/my-pantries.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent,
+    MyPantriesComponent
   ],
   imports: [
     BrowserModule,
