@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,41 +44,17 @@ public class PantryService implements IPantryService {
         return new PantryDTO(checkPantry(id));
     }
 
-    public List<PantryDTO> findAll(Long id) {
-        UserDTO userDTO = checkUser(id);
+    public List<PantryDTO> findAll(Principal principal) {
+//        UserDTO userDTO = checkUser(id);
+        UserDTO userDTO = userClient.getUserByUsername(
+                principal.getName(), "Bearer " + AuthController.getUserAuthOk());
+
         List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(userDTO.getId());
         List<PantryDTO> pantryDTOList = new ArrayList<>();
         for (Pantry pantry: pantries) {
             pantryDTOList.add(new PantryDTO(pantry));
         }
         return pantryDTOList;
-//            /* What I need */
-//            Pantry pantry;
-//            Product product;
-//            Integer quantityProduct;
-//            Set<ProductInPantry> productsInPantry = new HashSet<>();
-//
-//            /* What join table brings */
-//            Set<Object[]> products = pantryRepository.getProductsOfPantriesForUserId(id);
-//
-//
-//            for (Object[] p: products) {
-//                BigInteger productId = (BigInteger) p[0];
-//                BigInteger pantryId = (BigInteger) p[2];
-//                if(productRepository.existsById(productId.longValue()) && pantryRepository.existsById(pantryId.longValue())){
-//                    product = productRepository.findById(productId.longValue()).get();
-//                    pantry = pantryRepository.findById(pantryId.longValue()).get();
-//                    quantityProduct = (Integer) p[1];
-//                    productsInPantry.add(new ProductInPantry(pantry, product, quantityProduct));
-//                }
-//            }
-//            for (Pantry singlePantry: pantries) {
-//                singlePantry.setProductsInPantry(productsInPantry);
-//            }
-//
-//            for (ProductInPantry x: productsInPantry){
-//                System.out.println("product id: " + x.getProduct().getName() + " in pantry: " + x.getPantry().getId() + ". Total : " + x.getQuantity() );
-//            }
     }
 
     public PantryDTO add(PantryDTO pantryDTO, Long id) {

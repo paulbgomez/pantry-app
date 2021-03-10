@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -7,27 +8,33 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  logged: boolean = false;
+  logged = false;
   username: string;
   password: string;
 
-  constructor(public usersService: UsersService) {}
+  constructor(public usersService: UsersService, private cookies: CookieService) {}
 
-  login() {
+  login(): void {
     const user = {username: this.username, password: this.password};
     this.usersService.login(user).subscribe( data => {
       this.usersService.setToken(data.jwt);
       this.logged = true;
+      this.cookies.set('username', this.username);
     });
   }
 
-  register() {
+  register(): void {
     const user = {username: this.username, password: this.password};
     this.usersService.register(user).subscribe();
   }
 
-  logout(){
-    this.usersService.deleteToken();
+  logout(): void{
+    this.usersService.deleteCookies();
     this.logged = false;
   }
+
+  getAllPantries(): void{
+    this.usersService.getAllPantries();
+  }
+
 }

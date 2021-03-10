@@ -1,8 +1,11 @@
 package com.pantry.app.edgeservice.auth.security;
 
+import com.pantry.app.edgeservice.clients.UserClient;
+import com.pantry.app.edgeservice.controller.impl.UserController;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,9 @@ import java.util.Date;
 public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+
+    @Autowired
+    UserClient userClient;
 
     @Value("${pantry.app.secretjwt}")
     private String secretJwt;
@@ -39,6 +45,10 @@ public class JwtUtils {
     }
 
     public String generateToken(UserDetails userDetails) {
+
+        System.out.println("JWTUtils line 49" );
+        //Long idClient = userClient.getUserByUsername(userDetails.getUsername(), UserController.getUserAuthOk()).getId();
+
         return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationJwt))
                 .signWith(SignatureAlgorithm.HS512, secretJwt).compact();

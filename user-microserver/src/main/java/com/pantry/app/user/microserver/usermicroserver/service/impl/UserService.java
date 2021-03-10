@@ -47,17 +47,12 @@ public class UserService implements IUserService {
     }
 
     public UserDTO add(UserDTO userDTO) {
-        System.out.println("User service line 49");
         User user = new User(
                 userDTO.getUsername(),
                 userDTO.getPassword());
-        System.out.println("User service line 53");
         RoleDTO roleDTO = userDTO.getRole();
-        System.out.println("User service line 56");
         Role role = new Role(Status.valueOf(roleDTO.getStatus()), user);
-//       Role role = new Role(Status.USER, user);
        user.setRole(role);
-        System.out.println("User service line 60");
         userRepository.save(user);
        return userDTO;
     }

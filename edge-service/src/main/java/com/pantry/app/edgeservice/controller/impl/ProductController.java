@@ -16,22 +16,22 @@ public class ProductController {
 
     private static String pantryAuthOk;
 
-    @GetMapping("product/{id}")
+    @GetMapping("/product/{id}")
     public ProductDTO findProductById(@PathVariable Long id){
         return pantryClient.findProductById(id, "Bearer " + getPantryAuthOk());
     }
 
-    @GetMapping("product")
+    @GetMapping("/product")
     public List<ProductDTO> findAllProducts(){
         return pantryClient.findAllProducts("Bearer " + getPantryAuthOk());
     }
 
-    @PostMapping("product")
+    @PostMapping("/product")
     public ProductDTO addProduct(@RequestBody @Valid ProductDTO productDTO){
         return pantryClient.addProduct(productDTO, "Bearer " + getPantryAuthOk());
     }
 
-    @DeleteMapping("product/{id}")
+    @DeleteMapping("/product/{id}")
     public void deleteProduct(@PathVariable Long id){
         pantryClient.deleteProduct(id, "Bearer " + getPantryAuthOk());
     }

@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @CrossOrigin
 @RestController
 public class AuthController {
@@ -39,30 +41,22 @@ public class AuthController {
 
         Authentication authentication;
         try {
-            System.out.println("Auth line 42");
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-
         }
         catch (BadCredentialsException e) {
 
             throw new Exception("Invalid username or password", e);
         }
 
-        System.out.println("Auth line 53 " + authentication.getPrincipal());
-        System.out.println("Auth line 55 " + authentication.getName());
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
-
         final String jwt = jwtUtils.generateToken(userDetails);
 
-        System.out.println(jwt + "Auth line 64");
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
-
     }
 
     @RequestMapping(value = "/auth/signup", method = RequestMethod.POST)

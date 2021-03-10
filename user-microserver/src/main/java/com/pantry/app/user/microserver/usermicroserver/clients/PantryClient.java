@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @FeignClient("pantry-service")
@@ -16,8 +17,8 @@ public interface PantryClient {
     @PostMapping("/pantry/{id}")
     PantryDTO add(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @GetMapping("/pantry/all/{id}")
-    List<PantryDTO> findAll(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
+    @GetMapping("/pantry/all")
+    List<PantryDTO> findAll(Principal principal, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @GetMapping("/pantry/{id}")
     PantryDTO getPantryById(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);

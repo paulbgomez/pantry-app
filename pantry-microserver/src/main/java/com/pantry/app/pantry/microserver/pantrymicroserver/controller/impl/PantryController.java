@@ -6,8 +6,8 @@ import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IP
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -17,35 +17,34 @@ public class PantryController implements IPantryController {
     @Autowired
     IPantryService pantryService;
 
-    @GetMapping("pantry/{id}")
+    @GetMapping("/pantry/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PantryDTO getPantryById(@PathVariable Long id){
         return pantryService.getPantryById(id);
     }
 
-    @GetMapping("pantry/all/{id}")
+    @GetMapping("/pantry/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<PantryDTO> findAll(@PathVariable Long id){
-        return pantryService.findAll(id);
+    public List<PantryDTO> findAll(Principal principal){
+        return pantryService.findAll(principal);
     }
 
-    @PostMapping("pantry/{id}")
+    @PostMapping("/pantry/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public PantryDTO add(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id){
         return pantryService.add(pantryDTO, id);
     }
 
-    @DeleteMapping("pantry/{id}")
+    @DeleteMapping("/pantry/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id, @RequestBody @Valid PantryDTO pantryDTO){
         pantryService.delete(id, pantryDTO);
     }
 
-    @PatchMapping("pantry/{pantryId}/{productId}/{quantity}")
+    @PatchMapping("/pantry/{pantryId}/{productId}/{quantity}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity){
        pantryService.updatePantry(pantryId, productId, quantity);
     }
-
 
 }

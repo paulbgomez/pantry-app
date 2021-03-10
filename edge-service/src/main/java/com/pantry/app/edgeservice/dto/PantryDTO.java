@@ -22,6 +22,9 @@ public class PantryDTO {
     public PantryDTO() {
     }
 
+    public PantryDTO(@NotNull String name) {
+        this.name = name;
+    }
 
     public PantryDTO(Long id, @NotNull String name, @NotNull Long userId) {
         setId(id);

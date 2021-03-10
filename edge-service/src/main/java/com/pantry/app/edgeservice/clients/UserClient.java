@@ -20,7 +20,7 @@ public interface UserClient {
     @GetMapping("/user/check-email/{email}")
     boolean alreadyExistsUserWithEmail(@PathVariable String email, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @GetMapping("/user/check-username/{username}l}")
+    @GetMapping("/user/check-username/{username}")
     boolean alreadyExistsUserWithUsername(@PathVariable String username, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @GetMapping("/user/{id}")

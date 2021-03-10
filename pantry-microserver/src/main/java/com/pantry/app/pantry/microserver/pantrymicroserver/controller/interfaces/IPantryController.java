@@ -2,13 +2,14 @@ package com.pantry.app.pantry.microserver.pantrymicroserver.controller.interface
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface IPantryController {
 
     PantryDTO getPantryById(Long id);
 
-    List<PantryDTO> findAll(Long id);
+    List<PantryDTO> findAll(Principal principal);
 
     PantryDTO add(PantryDTO pantry, Long id);
 
