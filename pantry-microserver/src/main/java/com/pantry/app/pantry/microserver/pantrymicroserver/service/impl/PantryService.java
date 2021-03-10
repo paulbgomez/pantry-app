@@ -44,10 +44,11 @@ public class PantryService implements IPantryService {
         return new PantryDTO(checkPantry(id));
     }
 
-    public List<PantryDTO> findAll(Principal principal) {
+    public List<PantryDTO> findAll(String username) {
 //        UserDTO userDTO = checkUser(id);
+        System.out.println("service line 49 " + username);
         UserDTO userDTO = userClient.getUserByUsername(
-                principal.getName(), "Bearer " + AuthController.getUserAuthOk());
+                username, "Bearer " + AuthController.getUserAuthOk());
 
         List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(userDTO.getId());
         List<PantryDTO> pantryDTOList = new ArrayList<>();

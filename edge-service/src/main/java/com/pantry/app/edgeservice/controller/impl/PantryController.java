@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class PantryController implements IPantryController {
 
@@ -30,7 +31,7 @@ public class PantryController implements IPantryController {
     @GetMapping("/pantry/all")
     public List<PantryDTO> findAll(Principal principal){
         System.out.println("Edge service pantry controller line 32 " + principal.getName());
-        return pantryClient.findAll(principal, "Bearer " + getPantryAuthOk());
+        return pantryClient.findAll(principal.getName(), "Bearer " + getPantryAuthOk());
     }
 
     @DeleteMapping("/pantry/{id}")

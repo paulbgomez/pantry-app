@@ -6,13 +6,12 @@ import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @FeignClient("user-service")
 public interface UserClient {
-    @GetMapping("/user/{username}")
-    UserDTO getUserByUsername(@PathVariable(name = "username") String username, @RequestHeader(value = "Authorization") String authorizationHeader);
+    @GetMapping("/user/username/{username}")
+    UserDTO getUserByUsername(@PathVariable String username, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @PostMapping("/user")
     UserDTO add(@RequestBody @Valid UserDTO userDTO, @RequestHeader(value = "Authorization") String authorizationHeader);

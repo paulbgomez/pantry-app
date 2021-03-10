@@ -6,9 +6,9 @@ import com.pantry.app.edgeservice.dto.PantryDTO;
 import com.pantry.app.edgeservice.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 public class UserController implements IUserController {
 

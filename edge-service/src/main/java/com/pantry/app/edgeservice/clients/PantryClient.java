@@ -6,7 +6,6 @@ import com.pantry.app.edgeservice.dto.ProductDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -17,8 +16,8 @@ public interface PantryClient {
     @PostMapping("/pantry/{id}")
     PantryDTO add(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @GetMapping("/pantry/all")
-    List<PantryDTO> findAll(Principal principal, @RequestHeader(value = "Authorization") String authorizationHeader);
+    @GetMapping("/pantry/all/{username}")
+    List<PantryDTO> findAll(@PathVariable String username, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @GetMapping("/pantry/{id}")
     PantryDTO getPantryById(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);

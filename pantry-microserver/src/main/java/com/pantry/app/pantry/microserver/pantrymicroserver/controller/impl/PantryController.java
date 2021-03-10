@@ -23,10 +23,10 @@ public class PantryController implements IPantryController {
         return pantryService.getPantryById(id);
     }
 
-    @GetMapping("/pantry/all")
+    @GetMapping("/pantry/all/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public List<PantryDTO> findAll(Principal principal){
-        return pantryService.findAll(principal);
+    public List<PantryDTO> findAll(@PathVariable String username){
+        return pantryService.findAll(username);
     }
 
     @PostMapping("/pantry/{id}")

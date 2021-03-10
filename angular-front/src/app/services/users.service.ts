@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../environments/environment';
@@ -31,9 +31,14 @@ export class UsersService {
     this.cookies.delete('username');
   }
 
+  //http interceptor 2 archivos diferenteh
+  //auth guard
   getAllPantries(): Observable<any>{
-    // Definir la cabecera con el username de la cookie
-    // const headers = this.headers.set('username', this.cookies.get('username'));
-    return this.http.get(environment.host + '/pantry/all');
+
+    return this.http.get(environment.host + '/pantry/all', {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+        })
+    });
   }
 }

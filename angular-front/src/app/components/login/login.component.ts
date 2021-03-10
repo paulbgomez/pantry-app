@@ -11,6 +11,7 @@ export class LoginComponent {
   logged = false;
   username: string;
   password: string;
+  pantries = false;
 
   constructor(public usersService: UsersService, private cookies: CookieService) {}
 
@@ -34,7 +35,8 @@ export class LoginComponent {
   }
 
   getAllPantries(): void{
-    this.usersService.getAllPantries();
+    this.pantries = true;
+    this.usersService.getAllPantries().subscribe(pantry => console.log(pantry));
   }
 
 }

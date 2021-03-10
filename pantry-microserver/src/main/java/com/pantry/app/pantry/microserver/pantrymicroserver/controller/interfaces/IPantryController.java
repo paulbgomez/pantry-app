@@ -9,7 +9,7 @@ public interface IPantryController {
 
     PantryDTO getPantryById(Long id);
 
-    List<PantryDTO> findAll(Principal principal);
+    List<PantryDTO> findAll(String username);
 
     PantryDTO add(PantryDTO pantry, Long id);
 
