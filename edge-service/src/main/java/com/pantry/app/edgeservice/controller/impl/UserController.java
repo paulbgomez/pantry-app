@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
-@CrossOrigin
 @RestController
 public class UserController implements IUserController {
 
@@ -16,6 +15,14 @@ public class UserController implements IUserController {
     UserClient userClient;
 
     private static String userAuthOk;
+
+    /**
+     @USER ENDPOINTS
+     **/
+
+    /*
+    GET REQUESTS
+     */
 
     @GetMapping("/user/{id}")
     public UserDTO getUserById(@PathVariable Long id) {
@@ -27,14 +34,13 @@ public class UserController implements IUserController {
         return userClient.getUserByUsername(username, "Bearer " + getUserAuthOk());
     }
 
+    /*
+    POST REQUESTS
+     */
+
     @PostMapping("/user")
     public UserDTO add(@RequestBody UserDTO userDTO) {
         return userClient.add(userDTO, "Bearer " + getUserAuthOk());
-    }
-
-    @DeleteMapping("/user/{id}")
-    public void delete(@PathVariable Long id) {
-        userClient.delete(id,"Bearer " + getUserAuthOk());
     }
 
     @PostMapping("/user/new-pantry/{id}")
@@ -42,20 +48,22 @@ public class UserController implements IUserController {
         return userClient.createPantry(pantryDTO, id, "Bearer " + getUserAuthOk());
     }
 
+    /*
+    PUT REQUESTS
+     */
+
     @PutMapping("/user/{id}")
     public void modify(@PathVariable Long id, UserDTO userDTO) {
         userClient.modify(id, userDTO, "Bearer " + getUserAuthOk());
     }
 
-    @GetMapping("/user/check-email/{email}")
-    public boolean alreadyExistsUserWithEmail(@PathVariable String email) {
-        return userClient.alreadyExistsUserWithEmail(email, "Bearer " + getUserAuthOk());
-    }
+    /*
+    DELETE REQUESTS
+     */
 
-    @GetMapping("/user/check-username/{username}")
-    public boolean alreadyExistsUserWithUsername(@PathVariable String username) {
-        System.out.println("username" + username);
-        return userClient.alreadyExistsUserWithUsername(username, "Bearer " + getUserAuthOk());
+    @DeleteMapping("/user/{id}")
+    public void delete(@PathVariable Long id) {
+        userClient.delete(id,"Bearer " + getUserAuthOk());
     }
 
     public static String getUserAuthOk() {

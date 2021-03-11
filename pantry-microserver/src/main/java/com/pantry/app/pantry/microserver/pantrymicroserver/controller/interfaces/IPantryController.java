@@ -2,6 +2,7 @@ package com.pantry.app.pantry.microserver.pantrymicroserver.controller.interface
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface IPantryController {
     void updatePantry(Long pantryId, Long productId, Integer quantity);
 
     Integer getStockProductInSelectedPantry(Long productId, Long pantryId);
+
+    void addProductToPantry(@PathVariable Long pantryId, @PathVariable Long productId);
 }

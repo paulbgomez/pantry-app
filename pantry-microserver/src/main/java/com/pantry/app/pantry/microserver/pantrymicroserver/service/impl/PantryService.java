@@ -97,6 +97,18 @@ public class PantryService implements IPantryService {
         pantryRepository.save(pantry);
     }
 
+    public void addProductToPantry(Long pantryId, Long productId) {
+        Pantry pantry = checkPantry(pantryId);
+        for (ProductInPantry product: pantry.getProductsInPantry()){
+            if(product.getProduct().getId().equals(productId)){
+                product.setQuantity(1);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
+            }
+        }
+        pantryRepository.save(pantry);
+    }
+
     public List<ProductDTO> getProductsForPantry(Long id) {
         Set<Object[]> productsFromPantry =  pantryRepository.getProductsForPantryId(id);
         List<ProductDTO> products = new ArrayList<>();

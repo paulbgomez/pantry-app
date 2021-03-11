@@ -4,11 +4,10 @@ import com.pantry.app.edgeservice.auth.security.AuthenticationRequest;
 import com.pantry.app.edgeservice.dto.PantryDTO;
 import com.pantry.app.edgeservice.dto.ProductDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @FeignClient("pantry-service")
@@ -40,6 +39,10 @@ public interface PantryClient {
 
     @GetMapping("/product")
     List<ProductDTO> findAllProducts(@RequestHeader(value = "Authorization") String authorizationHeader);
+
+    /** @POST PRODUCT STOCK IN A PANTRY **/
+    @PostMapping("/pantry/add/{pantryId}/{productId}")
+    void addProductToPantry(@PathVariable Long pantryId, @PathVariable Long productId, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @PostMapping("/product")
     ProductDTO addProduct(@RequestBody @Valid ProductDTO productDTO, @RequestHeader(value = "Authorization") String authorizationHeader);

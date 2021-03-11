@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
+import {Component, OnInit} from '@angular/core';
+import {UsersService} from 'src/app/services/users.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {Pantry, Product} from '../../common/interfaces';
@@ -58,14 +58,14 @@ export class MyPantriesComponent implements OnInit {
     this.usersService.updateStock(pantryId, productId, stock).subscribe();
   }
 
-  newProduct(pantryId: number): void{
-    const nameProduct = document.getElementById('newNamePantry_' + pantryId);
-    const stockProduct = document.getElementById('newStockPantry_' + pantryId);
+  newProduct(pantryId: number, productId: number): void{
+    this.usersService.addProductToPantry(pantryId, productId).subscribe();
   }
 
   getAllProductsFromDB(): void{
     this.usersService.getProducts().subscribe(ListOfProducts => {
       this.productsDB = ListOfProducts;
+      console.log(ListOfProducts);
     });
   }
 

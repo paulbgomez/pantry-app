@@ -9,13 +9,12 @@ public class ProductDTO {
     private String name;
     @NotNull
     private String category;
-    @NotNull
     private Long barcode;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(Long id, @NotNull String name, @NotNull String category, @NotNull Long barcode) {
+    public ProductDTO(Long id, @NotNull String name, @NotNull String category, Long barcode) {
         setId(id);
         setName(name);
         setCategory(category);

@@ -17,11 +17,6 @@ public class UserDTO {
     public UserDTO() {
     }
 
-/*    public UserDTO(@NotNull String username,@NotNull  String password) {
-        this.username = username;
-        this.password = password;
-    }*/
-
     public UserDTO(@NotNull String username,@NotNull  String password, RoleDTO role) {
         this.username = username;
         this.password = password;

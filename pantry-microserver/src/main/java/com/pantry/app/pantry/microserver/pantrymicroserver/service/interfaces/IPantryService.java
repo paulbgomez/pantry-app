@@ -20,4 +20,6 @@ public interface IPantryService {
     List<ProductDTO> getProductsForPantry (Long id);
 
     Integer getStockProductInSelectedPantry(Long productId, Long pantryId);
+
+    void addProductToPantry(Long pantryId, Long productId);
 }

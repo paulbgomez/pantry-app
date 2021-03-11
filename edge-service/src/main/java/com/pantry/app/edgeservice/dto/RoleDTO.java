@@ -1,7 +1,5 @@
 package com.pantry.app.edgeservice.dto;
 
-import javax.validation.constraints.NotNull;
-
 public class RoleDTO {
 
     private String status;
@@ -13,11 +11,6 @@ public class RoleDTO {
     public RoleDTO(String status){
         this.status = status;
     }
-
-//    public RoleDTO(String status, UserDTO userDTO) {
-//        this.status = status;
-//        this.userDTO = userDTO;
-//    }
 
     public String getStatus() {
         return status;

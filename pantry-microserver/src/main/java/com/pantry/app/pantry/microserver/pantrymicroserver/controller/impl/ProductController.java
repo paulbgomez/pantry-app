@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin
 @RestController
 public class ProductController implements IProductController {
 
     @Autowired
     IProductService productService;
+
 
     @GetMapping("/product/{id}")
     @ResponseStatus(HttpStatus.OK)

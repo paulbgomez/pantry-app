@@ -2,7 +2,6 @@ package com.pantry.app.edgeservice.auth.security;
 
 import com.pantry.app.edgeservice.clients.PantryClient;
 import com.pantry.app.edgeservice.clients.UserClient;
-import com.pantry.app.edgeservice.controller.impl.AuthController;
 import com.pantry.app.edgeservice.controller.impl.PantryController;
 import com.pantry.app.edgeservice.controller.impl.UserController;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;

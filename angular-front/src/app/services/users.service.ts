@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
-import { environment } from '../../environments/environment';
-import { Pantry, ProductWithStock, Product } from '../common/interfaces';
+import {Observable} from 'rxjs';
+import {CookieService} from 'ngx-cookie-service';
+import {environment} from '../../environments/environment';
+import {Pantry, ProductWithStock} from '../common/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,9 @@ import { Pantry, ProductWithStock, Product } from '../common/interfaces';
 export class UsersService {
   constructor(private http: HttpClient, private cookies: CookieService) {}
 
+  /*
+  LOG IN METHODS
+   */
   login(user: {username: string, password: string}): Observable<any> {
     return this.http.post(environment.host + '/auth/signin', user);
   }
@@ -32,8 +35,10 @@ export class UsersService {
     this.cookies.delete('username');
   }
 
-  //http interceptor 2 archivos diferenteh
-  //auth guard
+  /**
+  @GET ENDPOINTS
+   **/
+
   getAllPantries(): Observable<Pantry[]>{
     return this.http.get<Pantry[]>(environment.host + '/pantry/all', {headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -43,7 +48,7 @@ export class UsersService {
   }
 
    getProductsFromPantry(id: number): Observable<ProductWithStock[]>{
-    return this.http.get<ProductWithStock[]>(environment.host + '/pantry/all/products/' + id, {headers: new HttpHeaders({
+    return this.http.get<ProductWithStock[]>(environment.host + `/pantry/all/products/${id}` , {headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.getToken()
         })
@@ -51,24 +56,7 @@ export class UsersService {
   }
 
   getStockProduct(productId: number, pantryId: number): Observable<number>{
-    return this.http.get<number>(environment.host + '/pantry/' + pantryId + '/stock/product/' + productId, {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
-  }
-
-  addPantry(): Observable<any>{
-
-    return this.http.post(environment.host + '/pantry', {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-        })
-    });
-  }
-
-  updateStock(pantryId: number, productId: number, quantity: number): Observable<any>{
-    return this.http.patch(environment.host + '/pantry/' + pantryId + '/' + productId + '/' + quantity, {headers: new HttpHeaders({
+    return this.http.get<number>(environment.host + `/pantry/${pantryId}/stock/product/${productId}`, {headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.getToken()
       })
@@ -83,5 +71,41 @@ export class UsersService {
     });
   }
 
+  /**
+   * @POST ENDPOINTS
+   **/
+
+  addPantry(): Observable<any>{
+    return this.http.post(environment.host + '/pantry', null,
+      {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+        })
+    });
+  }
+
+  addProductToPantry(pantryId: number, productId: number): Observable<any>{
+    return this.http.post<any>(environment.host + `/pantry/add/${pantryId}/${productId}`, null,
+      {headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.getToken()
+        })
+      });
+  }
+
+  /**
+   * @PATCH ENDPOINTS
+   **/
+
+  updateStock(pantryId: number, productId: number, quantity: number): Observable<any>{
+    return this.http.patch<any>(environment.host + `/pantry/${pantryId}/${productId}/${quantity}`,
+      null,
+      {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    });
+  }
 
 }
