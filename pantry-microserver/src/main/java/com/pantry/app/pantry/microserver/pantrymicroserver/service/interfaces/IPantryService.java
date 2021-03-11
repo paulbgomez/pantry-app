@@ -2,6 +2,7 @@ package com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
+
 import java.util.List;
 
 public interface IPantryService {
@@ -17,4 +18,6 @@ public interface IPantryService {
     void updatePantry(Long pantryId, Long productId, Integer quantity);
 
     List<ProductDTO> getProductsForPantry (Long id);
+
+    Integer getStockProductInSelectedPantry(Long productId, Long pantryId);
 }

@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigInteger;
-import java.security.Principal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Service
 public class PantryService implements IPantryService {
@@ -37,11 +39,7 @@ public class PantryService implements IPantryService {
     }
 
     private UserDTO checkUserUsername(String username) {
-        if (userClient.alreadyExistsUserWithUsername(username, "Bearer " + AuthController.getUserAuthOk())){
-            return userClient.getUserByUsername(username, "Bearer " + AuthController.getUserAuthOk());
-        } else {
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        }
+        return userClient.getUserByUsername(username, "Bearer " + AuthController.getUserAuthOk());
     }
 
     private UserDTO checkUser(Long id) {
@@ -57,10 +55,10 @@ public class PantryService implements IPantryService {
         return new PantryDTO(checkPantry(id));
     }
 
+    /** FIND ALL PANTRIES FOR AN USER BY USERNAME **/
     public List<PantryDTO> findAll(String username) {
         UserDTO userDTO = userClient.getUserByUsername(
                 username, "Bearer " + AuthController.getUserAuthOk());
-//        UserDTO userDTO = checkUserUsername(username);
         List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(userDTO.getId());
         List<PantryDTO> pantryDTOList = new ArrayList<>();
         for (Pantry pantry: pantries) {
@@ -69,8 +67,8 @@ public class PantryService implements IPantryService {
         return pantryDTOList;
     }
 
+    /** ADD ONE PANTRY FOR AN USER BY USERNAME **/
     public PantryDTO add(String username) {
-//        UserDTO userDTO = checkUserUsername(username);
         UserDTO userDTO = userClient.getUserByUsername(
                 username, "Bearer " + AuthController.getUserAuthOk());
         Pantry pantry = pantryRepository.save(new Pantry(
@@ -103,8 +101,6 @@ public class PantryService implements IPantryService {
         Set<Object[]> productsFromPantry =  pantryRepository.getProductsForPantryId(id);
         List<ProductDTO> products = new ArrayList<>();
 
-
-
         for(Object[] object: productsFromPantry){
             BigInteger productId = (BigInteger) object[0];
             Product product = productRepository.findById(productId.longValue()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
@@ -114,6 +110,9 @@ public class PantryService implements IPantryService {
         return products;
     }
 
+    public Integer getStockProductInSelectedPantry(Long productId, Long pantryId){
+        return pantryRepository.getStockProductInAPantry(productId, pantryId);
+    }
 }
 
 

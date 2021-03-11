@@ -9,13 +9,17 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MyPantriesComponent } from './components/my-pantries/my-pantries.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PantryDetailsComponent } from './components/pantry-details/pantry-details.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    MyPantriesComponent
+    MyPantriesComponent,
+    PantryDetailsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

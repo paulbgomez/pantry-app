@@ -5,6 +5,7 @@ import com.pantry.app.edgeservice.controller.interfaces.IPantryController;
 import com.pantry.app.edgeservice.dto.PantryDTO;
 import com.pantry.app.edgeservice.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -47,6 +48,11 @@ public class PantryController implements IPantryController {
     @PatchMapping("/pantry/{pantryId}/{productId}/{quantity}")
     public void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity){
         pantryClient.updatePantry(pantryId, productId, quantity, "Bearer " + getPantryAuthOk());
+    }
+
+    @GetMapping("/pantry/{pantryId}/stock/product/{productId}")
+    public Integer getStockProductInSelectedPantry(@PathVariable Long productId,@PathVariable Long pantryId){
+        return pantryClient.getStockProductInSelectedPantry(productId, pantryId, "Bearer " + getPantryAuthOk());
     }
 
     public static String getPantryAuthOk() {

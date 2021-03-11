@@ -7,8 +7,8 @@ import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IP
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -52,6 +52,12 @@ public class PantryController implements IPantryController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity){
        pantryService.updatePantry(pantryId, productId, quantity);
+    }
+
+    @GetMapping("/pantry/{pantryId}/stock/product/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Integer getStockProductInSelectedPantry(@PathVariable Long productId,@PathVariable Long pantryId){
+        return pantryService.getStockProductInSelectedPantry(productId, pantryId);
     }
 
 }

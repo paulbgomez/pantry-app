@@ -30,4 +30,10 @@ public interface PantryRepository extends JpaRepository<Pantry, Long> {
             WHERE pantry_id = :id ORDER BY pantry_id""", nativeQuery = true)
     Set<Object[]> getProductsForPantryId (@Param("id") Long id);
 
+    @Query(value = """
+            SELECT quantity
+            FROM product_in_pantry
+            WHERE product_id = :productId AND pantry_id = :pantryId""", nativeQuery = true)
+    Integer getStockProductInAPantry(@Param("productId") Long productId, @Param("pantryId") Long pantryId);
+
 }

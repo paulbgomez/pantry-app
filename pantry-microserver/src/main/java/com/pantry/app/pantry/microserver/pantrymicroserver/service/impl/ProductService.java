@@ -49,4 +49,8 @@ public class ProductService implements IProductService {
     public void delete(Long id) {
         productRepository.delete(checkProduct(id));
     }
+
+    public Integer getProductQuantity(Long id){
+        return productRepository.getQuantityProduct(id);
+    }
 }

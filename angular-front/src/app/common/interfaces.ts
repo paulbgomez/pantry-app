@@ -3,11 +3,7 @@ export interface Pantry {
   name: string;
   userId: number;
   creationDate: Date;
-  // productsInPantry: {
-  //   pantryId: number,
-  //   productId: number,
-  //   quantity: number
-  // }[];
+  ListOfProducts?: ProductWithStock[];
 }
 
 export interface Product {
@@ -15,11 +11,10 @@ export interface Product {
   name: string;
   category: string;
   barcode: number;
-  // productsInPantry: {
-  //   pantryId: number,
-  //   productId: number,
-  //   quantity: number
-  // }[];
+}
+
+export interface ProductWithStock extends Product{
+  stock?: number;
 }
 
 export interface User {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { CookieService } from 'ngx-cookie-service';
 import {Pantry} from '../../common/interfaces';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,9 @@ export class LoginComponent {
   logged = false;
   username: string;
   password: string;
-  pantries = false;
-  pantry: Pantry;
-  pantryArray: Pantry[] = [];
-  pantryArrayFormatted: [] = [];
 
-  constructor(public usersService: UsersService, private cookies: CookieService) {}
+
+  constructor(public usersService: UsersService, private cookies: CookieService, private router: Router) {}
 
   login(): void {
     const user = {username: this.username, password: this.password};
@@ -25,28 +23,13 @@ export class LoginComponent {
       this.usersService.setToken(data.jwt);
       this.logged = true;
       this.cookies.set('username', this.username);
+      this.router.navigate(['']).then();
     });
   }
 
   register(): void {
     const user = {username: this.username, password: this.password};
     this.usersService.register(user).subscribe();
-  }
-
-  logout(): void{
-    this.usersService.deleteCookies();
-    this.logged = false;
-  }
-
-  getAllPantries(): void{
-    this.pantries = true;
-    this.usersService.getAllPantries().subscribe(e => {
-      this.pantryArray.push(e);
-    });
-    for (let i = 0; i < this.pantryArray.length; i++){
-
-    }
-    console.log(this.pantryArray);
   }
 
 }

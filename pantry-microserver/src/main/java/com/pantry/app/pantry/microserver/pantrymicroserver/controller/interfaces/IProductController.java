@@ -13,4 +13,5 @@ public interface IProductController {
 
     void deleteProduct(Long id);
 
+    Integer getProductQuantity(Long id);
 }

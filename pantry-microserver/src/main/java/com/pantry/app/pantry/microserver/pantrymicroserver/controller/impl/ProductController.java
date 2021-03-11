@@ -40,4 +40,10 @@ public class ProductController implements IProductController {
     public void deleteProduct(@PathVariable Long id){
         productService.delete(id);
     }
+
+    @GetMapping("/product/stock/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Integer getProductQuantity(@PathVariable Long id) {
+        return productService.getProductQuantity(id);
+    }
 }

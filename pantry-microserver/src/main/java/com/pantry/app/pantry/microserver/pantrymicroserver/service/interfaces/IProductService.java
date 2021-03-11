@@ -12,4 +12,6 @@ public interface IProductService {
     ProductDTO add(ProductDTO productDTO);
 
     void delete(Long id);
+
+    Integer getProductQuantity(Long id);
 }

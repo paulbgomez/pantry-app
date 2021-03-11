@@ -23,6 +23,9 @@ public interface PantryClient {
     @GetMapping("/pantry/all/products/{id}")
     List<ProductDTO> getProductsForPantry(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
+    @GetMapping("/pantry/{pantryId}/stock/product/{productId}")
+    Integer getStockProductInSelectedPantry(@PathVariable Long productId,@PathVariable Long pantryId, @RequestHeader(value = "Authorization") String authorizationHeader);
+
     @GetMapping("/pantry/{id}")
     PantryDTO getPantryById(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
@@ -43,6 +46,9 @@ public interface PantryClient {
 
     @DeleteMapping("/product/{id}")
     void deleteProduct(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
+
+    @GetMapping("/product/stock/{id}")
+    Integer getProductQuantity(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @PostMapping("/pantry/authenticate")
     ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest);

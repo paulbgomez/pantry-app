@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../environments/environment';
-import {Product} from '../common/interfaces';
+import { Pantry, ProductWithStock, Product } from '../common/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -34,21 +34,28 @@ export class UsersService {
 
   //http interceptor 2 archivos diferenteh
   //auth guard
-  getAllPantries(): Observable<any>{
-    return this.http.get(environment.host + '/pantry/all', {headers: new HttpHeaders({
+  getAllPantries(): Observable<Pantry[]>{
+    return this.http.get<Pantry[]>(environment.host + '/pantry/all', {headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.getToken()
         })
     });
   }
 
-  async getProductsFromPantry(id: number): Promise<Product[]>{
-    const data = this.http.get<Product[]>(environment.host + '/pantry/all/products/' + id, {headers: new HttpHeaders({
+   getProductsFromPantry(id: number): Observable<ProductWithStock[]>{
+    return this.http.get<ProductWithStock[]>(environment.host + '/pantry/all/products/' + id, {headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.getToken()
         })
-    }).toPromise();
-    return await data;
+    });
+  }
+
+  getStockProduct(productId: number, pantryId: number): Observable<number>{
+    return this.http.get<number>(environment.host + '/pantry/' + pantryId + '/stock/product/' + productId, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    });
   }
 
   addPantry(): Observable<any>{
@@ -57,6 +64,22 @@ export class UsersService {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.getToken()
         })
+    });
+  }
+
+  updateStock(pantryId: number, productId: number, quantity: number): Observable<any>{
+    return this.http.patch(environment.host + '/pantry/' + pantryId + '/' + productId + '/' + quantity, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    });
+  }
+
+  getProducts(): Observable<any>{
+    return this.http.get(environment.host + '/product', {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
     });
   }
 

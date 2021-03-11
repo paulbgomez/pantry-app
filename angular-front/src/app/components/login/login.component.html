@@ -22,16 +22,8 @@
 
   <div *ngIf="logged" class="logout">
     <button type="submit" (click)="logout()">Log out</button>
-    <button type="submit" (click)="getAllPantries()">Show all</button>
   </div>
 
-<div *ngIf="pantries">
-  <ul *ngFor ="let pantry of pantryArray">
-    <li>Id -> {{pantry.id}}</li>
-    <li>Name -> {{pantry.name}}</li>
-    <li>User Id -> {{pantry.userId}}</li>
-  </ul>
-</div>
 
 
 
