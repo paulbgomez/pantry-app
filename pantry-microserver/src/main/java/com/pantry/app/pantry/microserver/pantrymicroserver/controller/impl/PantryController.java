@@ -2,6 +2,7 @@ package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.controller.interfaces.IPantryController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IPantryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +30,16 @@ public class PantryController implements IPantryController {
         return pantryService.findAll(username);
     }
 
-    @PostMapping("/pantry/{id}")
+    @GetMapping("/pantry/all/products/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDTO> getProductsForPantry(@PathVariable Long id){
+        return pantryService.getProductsForPantry(id);
+    }
+
+    @PostMapping("/pantry/{username}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PantryDTO add(@RequestBody @Valid PantryDTO pantryDTO, @PathVariable Long id){
-        return pantryService.add(pantryDTO, id);
+    public PantryDTO add(@PathVariable String username){
+        return pantryService.add(username);
     }
 
     @DeleteMapping("/pantry/{id}")

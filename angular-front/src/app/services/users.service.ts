@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../environments/environment';
+import {Product} from '../common/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +35,30 @@ export class UsersService {
   //http interceptor 2 archivos diferenteh
   //auth guard
   getAllPantries(): Observable<any>{
-
     return this.http.get(environment.host + '/pantry/all', {headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.getToken()
         })
     });
   }
+
+  async getProductsFromPantry(id: number): Promise<Product[]>{
+    const data = this.http.get<Product[]>(environment.host + '/pantry/all/products/' + id, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+        })
+    }).toPromise();
+    return await data;
+  }
+
+  addPantry(): Observable<any>{
+
+    return this.http.post(environment.host + '/pantry', {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+        })
+    });
+  }
+
+
 }

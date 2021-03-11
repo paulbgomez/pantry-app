@@ -3,20 +3,22 @@ package com.pantry.app.pantry.microserver.pantrymicroserver.service.impl;
 import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
 import com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl.AuthController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Pantry;
+import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.ProductInPantry;
 import com.pantry.app.pantry.microserver.pantrymicroserver.repository.PantryRepository;
+import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;
 import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IPantryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigInteger;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class PantryService implements IPantryService {
@@ -27,8 +29,19 @@ public class PantryService implements IPantryService {
     @Autowired
     UserClient userClient;
 
+    @Autowired
+    ProductRepository productRepository;
+
     private Pantry checkPantry(Long id) {
         return pantryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found"));
+    }
+
+    private UserDTO checkUserUsername(String username) {
+        if (userClient.alreadyExistsUserWithUsername(username, "Bearer " + AuthController.getUserAuthOk())){
+            return userClient.getUserByUsername(username, "Bearer " + AuthController.getUserAuthOk());
+        } else {
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
     }
 
     private UserDTO checkUser(Long id) {
@@ -45,11 +58,9 @@ public class PantryService implements IPantryService {
     }
 
     public List<PantryDTO> findAll(String username) {
-//        UserDTO userDTO = checkUser(id);
-        System.out.println("service line 49 " + username);
         UserDTO userDTO = userClient.getUserByUsername(
                 username, "Bearer " + AuthController.getUserAuthOk());
-
+//        UserDTO userDTO = checkUserUsername(username);
         List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(userDTO.getId());
         List<PantryDTO> pantryDTOList = new ArrayList<>();
         for (Pantry pantry: pantries) {
@@ -58,13 +69,14 @@ public class PantryService implements IPantryService {
         return pantryDTOList;
     }
 
-    public PantryDTO add(PantryDTO pantryDTO, Long id) {
-        UserDTO userDTO = checkUser(id);
-        Pantry pantry = new Pantry(
-                pantryDTO.getName(),
+    public PantryDTO add(String username) {
+//        UserDTO userDTO = checkUserUsername(username);
+        UserDTO userDTO = userClient.getUserByUsername(
+                username, "Bearer " + AuthController.getUserAuthOk());
+        Pantry pantry = pantryRepository.save(new Pantry(
+                "Pantry of " + username,
                 userDTO.getId()
-        );
-        pantryRepository.save(pantry);
+        ));
         return new PantryDTO(pantry);
     }
 
@@ -85,6 +97,21 @@ public class PantryService implements IPantryService {
             }
         }
         pantryRepository.save(pantry);
+    }
+
+    public List<ProductDTO> getProductsForPantry(Long id) {
+        Set<Object[]> productsFromPantry =  pantryRepository.getProductsForPantryId(id);
+        List<ProductDTO> products = new ArrayList<>();
+
+
+
+        for(Object[] object: productsFromPantry){
+            BigInteger productId = (BigInteger) object[0];
+            Product product = productRepository.findById(productId.longValue()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+            products.add(new ProductDTO(product));
+        }
+
+        return products;
     }
 
 }

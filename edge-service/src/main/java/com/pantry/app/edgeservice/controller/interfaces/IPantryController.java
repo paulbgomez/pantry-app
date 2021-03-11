@@ -1,6 +1,7 @@
 package com.pantry.app.edgeservice.controller.interfaces;
 
 import com.pantry.app.edgeservice.dto.PantryDTO;
+import com.pantry.app.edgeservice.dto.ProductDTO;
 
 import java.security.Principal;
 import java.util.List;
@@ -10,7 +11,9 @@ public interface IPantryController {
 
     List<PantryDTO> findAll(Principal principal);
 
-    PantryDTO add(PantryDTO pantry, Long id);
+    List<ProductDTO> getProductsForPantry(Long id);
+
+    PantryDTO add(Principal principal);
 
     void delete(Long id, PantryDTO pantryDTO);
 

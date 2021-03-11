@@ -12,4 +12,5 @@ public interface IProductController {
     ProductDTO addProduct(ProductDTO productDTO);
 
     void deleteProduct(Long id);
+
 }

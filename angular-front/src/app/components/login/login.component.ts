@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { CookieService } from 'ngx-cookie-service';
+import {Pantry} from '../../common/interfaces';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,9 @@ export class LoginComponent {
   username: string;
   password: string;
   pantries = false;
+  pantry: Pantry;
+  pantryArray: Pantry[] = [];
+  pantryArrayFormatted: [] = [];
 
   constructor(public usersService: UsersService, private cookies: CookieService) {}
 
@@ -36,7 +40,13 @@ export class LoginComponent {
 
   getAllPantries(): void{
     this.pantries = true;
-    this.usersService.getAllPantries().subscribe(pantry => console.log(pantry));
+    this.usersService.getAllPantries().subscribe(e => {
+      this.pantryArray.push(e);
+    });
+    for (let i = 0; i < this.pantryArray.length; i++){
+
+    }
+    console.log(this.pantryArray);
   }
 
 }

@@ -14,18 +14,20 @@ public interface PantryRepository extends JpaRepository<Pantry, Long> {
 
     List<Pantry> findAllByUserIdOrderByCreationDateAsc(Long id);
 
-    @Query(value = "SELECT product_id, quantity, pantry_id\n" +
-            "FROM pantry\n" +
-            "         JOIN product_in_pantry ON id = pantry_id\n" +
-            "         JOIN product on product_id = product.id\n" +
-            "WHERE user_id = :id ORDER BY pantry_id", nativeQuery = true)
+    @Query(value = """
+            SELECT product_id, quantity, pantry_id
+            FROM pantry
+                     JOIN product_in_pantry ON id = pantry_id
+                     JOIN product on product_id = product.id
+            WHERE user_id = :id ORDER BY pantry_id""", nativeQuery = true)
     Set<Object[]> getProductsOfPantriesForUserId (@Param("id") Long id);
 
-    @Query(value = "SELECT product_id, quantity\n" +
-            "FROM pantry\n" +
-            "         JOIN product_in_pantry ON id = pantry_id\n" +
-            "         JOIN product on product_id = product.id\n" +
-            "WHERE pantry_id = :id ORDER BY pantry_id", nativeQuery = true)
+    @Query(value = """
+            SELECT product_id, quantity
+            FROM pantry
+                     JOIN product_in_pantry ON id = pantry_id
+                     JOIN product on product_id = product.id
+            WHERE pantry_id = :id ORDER BY pantry_id""", nativeQuery = true)
     Set<Object[]> getProductsForPantryId (@Param("id") Long id);
 
 }

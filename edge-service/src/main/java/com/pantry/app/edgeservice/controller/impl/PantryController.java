@@ -3,6 +3,7 @@ package com.pantry.app.edgeservice.controller.impl;
 import com.pantry.app.edgeservice.clients.PantryClient;
 import com.pantry.app.edgeservice.controller.interfaces.IPantryController;
 import com.pantry.app.edgeservice.dto.PantryDTO;
+import com.pantry.app.edgeservice.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -18,9 +19,9 @@ public class PantryController implements IPantryController {
 
     private static String pantryAuthOk;
 
-    @PostMapping("/pantry/{id}")
-    public PantryDTO add(@RequestBody PantryDTO pantryDTO, @PathVariable Long id){
-        return pantryClient.add(pantryDTO, id, "Bearer " + getPantryAuthOk());
+    @PostMapping("/pantry")
+    public PantryDTO add(Principal principal){
+        return pantryClient.add(principal.getName(), "Bearer " + getPantryAuthOk());
     }
 
     @GetMapping("/pantry/{id}")
@@ -30,8 +31,12 @@ public class PantryController implements IPantryController {
 
     @GetMapping("/pantry/all")
     public List<PantryDTO> findAll(Principal principal){
-        System.out.println("Edge service pantry controller line 32 " + principal.getName());
         return pantryClient.findAll(principal.getName(), "Bearer " + getPantryAuthOk());
+    }
+
+    @GetMapping("/pantry/all/products/{id}")
+    public List<ProductDTO> getProductsForPantry(@PathVariable Long id) {
+        return pantryClient.getProductsForPantry(id, "Bearer " + getPantryAuthOk());
     }
 
     @DeleteMapping("/pantry/{id}")
