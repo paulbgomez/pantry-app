@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -16,4 +18,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                      JOIN product on product_id = product.id
             WHERE product_id = :id""", nativeQuery = true)
     Integer getQuantityProduct(@Param("id") Long id);
+
 }

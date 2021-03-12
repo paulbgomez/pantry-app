@@ -24,7 +24,7 @@ public class PantryDTO {
     LocalDateTime creationDate;
 
     @JsonIgnore
-    Set<ProductInPantry> productsInPantry;
+    Set<ProductInPantryDTO> productsInPantry;
 
     public PantryDTO() {
     }
@@ -34,7 +34,7 @@ public class PantryDTO {
         setName(pantry.getName());
         setUserId(pantry.getUserId());
         setCreationDate(LocalDateTime.now());
-        setProductsInPantry(pantry.getProductsInPantry());
+        //setProductsInPantry( pantry.getProductsInPantry());
     }
 
     public PantryDTO(Long id, @NotNull String name, @NotNull Long userId) {
@@ -76,11 +76,11 @@ public class PantryDTO {
         this.creationDate = creationDate;
     }
 
-    public Set<ProductInPantry> getProductsInPantry() {
+    public Set<ProductInPantryDTO> getProductsInPantry() {
         return productsInPantry;
     }
 
-    public void setProductsInPantry(Set<ProductInPantry> productsInPantry) {
+    public void setProductsInPantry(Set<ProductInPantryDTO> productsInPantry) {
         this.productsInPantry = productsInPantry;
     }
 }

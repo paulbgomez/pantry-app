@@ -4,7 +4,9 @@ import com.pantry.app.edgeservice.clients.PantryClient;
 import com.pantry.app.edgeservice.controller.interfaces.IPantryController;
 import com.pantry.app.edgeservice.dto.PantryDTO;
 import com.pantry.app.edgeservice.dto.ProductDTO;
+import com.pantry.app.edgeservice.dto.ProductInPantryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -74,11 +76,17 @@ public class PantryController implements IPantryController {
     DELETE REQUESTS
      */
 
+    /** @DELETE A PANTRY FOR AN ID **/
     @DeleteMapping("/pantry/{id}")
-    public void delete(@PathVariable Long id, @RequestBody @Valid PantryDTO pantryDTO){
-        pantryClient.delete(id, pantryDTO, "Bearer " + getPantryAuthOk());
+    public void delete(Principal principal, @PathVariable Long id){
+        pantryClient.delete(principal.getName(), id, "Bearer " + getPantryAuthOk());
     }
 
+    /** @DELETE A PRODUCT FROM A PANTRY **/
+    @DeleteMapping("/pantry/{pantryId}/product/{productId}")
+    public void deleteProductPantry(Principal principal, @PathVariable Long pantryId,@PathVariable Long productId){
+        pantryClient.deleteProductPantry(principal.getName(), pantryId, productId, "Bearer " + getPantryAuthOk());
+    }
 
     /**
      @PRODUCT ENDPOINTS

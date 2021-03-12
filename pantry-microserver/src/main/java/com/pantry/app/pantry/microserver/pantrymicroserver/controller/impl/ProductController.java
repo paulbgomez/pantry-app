@@ -16,7 +16,6 @@ public class ProductController implements IProductController {
     @Autowired
     IProductService productService;
 
-
     @GetMapping("/product/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDTO findProductById(@PathVariable Long id){
@@ -27,6 +26,12 @@ public class ProductController implements IProductController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> findAllProducts(){
         return productService.findAll();
+    }
+
+    @GetMapping("/product/stock/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Integer getProductQuantity(@PathVariable Long id) {
+        return productService.getProductQuantity(id);
     }
 
     @PostMapping("/product")
@@ -41,9 +46,4 @@ public class ProductController implements IProductController {
         productService.delete(id);
     }
 
-    @GetMapping("/product/stock/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Integer getProductQuantity(@PathVariable Long id) {
-        return productService.getProductQuantity(id);
-    }
 }

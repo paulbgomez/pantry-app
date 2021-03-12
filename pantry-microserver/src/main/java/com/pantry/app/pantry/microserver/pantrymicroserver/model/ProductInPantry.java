@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pantry.app.pantry.microserver.pantrymicroserver.utils.CompositeKey;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 public class ProductInPantry {
@@ -29,6 +30,13 @@ public class ProductInPantry {
     }
 
     public ProductInPantry(Pantry pantry, Product product, Integer quantity) {
+        this.pantry = pantry;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    public ProductInPantry(CompositeKey id, Pantry pantry, Product product, Integer quantity) {
+        this.id = id;
         this.pantry = pantry;
         this.product = product;
         this.quantity = quantity;

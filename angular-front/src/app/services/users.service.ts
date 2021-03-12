@@ -108,4 +108,24 @@ export class UsersService {
     });
   }
 
+  /**
+   * @DELETE ENDPOINTS
+   **/
+
+  deletePantry(id: number): Observable<any>{
+    return this.http.delete<any>(environment.host + `/pantry/${id}`, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    });
+  }
+
+  deleteProductFromPantry(pantryId: number, productId: number): Observable<any>{
+    return this.http.delete<any>(environment.host + `/pantry/${pantryId}/product/${productId}`, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    });
+  }
+
 }

@@ -28,8 +28,11 @@ public interface PantryClient {
     @GetMapping("/pantry/{id}")
     PantryDTO getPantryById(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
 
-    @DeleteMapping("/pantry/{id}")
-    void delete(@PathVariable Long id, @RequestBody @Valid PantryDTO pantryDTO, @RequestHeader(value = "Authorization") String authorizationHeader);
+    @DeleteMapping("/pantry/{id}/{username}")
+    void delete(@PathVariable String username , @PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);
+
+    @DeleteMapping("/pantry/{pantryId}/product/{productId}/{username}")
+    void deleteProductPantry(@PathVariable String username , @PathVariable Long pantryId, @PathVariable Long productId, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @PatchMapping("/pantry/{pantryId}/{productId}/{quantity}")
     void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity, @RequestHeader(value = "Authorization") String authorizationHeader);

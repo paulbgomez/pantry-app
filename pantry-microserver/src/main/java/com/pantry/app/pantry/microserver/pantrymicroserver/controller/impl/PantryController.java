@@ -3,11 +3,11 @@ package com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl;
 import com.pantry.app.pantry.microserver.pantrymicroserver.controller.interfaces.IPantryController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.PantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductInPantryDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces.IPantryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -52,13 +52,6 @@ public class PantryController implements IPantryController {
         pantryService.addProductToPantry(pantryId, productId);
     }
 
-    /** @PATCH PRODUCT STOCK IN A PANTRY **/
-    @PatchMapping("/pantry/{pantryId}/{productId}/{quantity}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity){
-        pantryService.updatePantry(pantryId, productId, quantity);
-    }
-
     /** @POST A PANTRY **/
     @PostMapping("/pantry/{username}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -66,15 +59,25 @@ public class PantryController implements IPantryController {
         return pantryService.add(username);
     }
 
-    /** @DELETE A PANTRY FOR AN ID **/
-    @DeleteMapping("/pantry/{id}")
+    /** @PATCH PRODUCT STOCK IN A PANTRY **/
+    @PatchMapping("/pantry/{pantryId}/{productId}/{quantity}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id, @RequestBody @Valid PantryDTO pantryDTO){
-        pantryService.delete(id, pantryDTO);
+    public void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity){
+        pantryService.updatePantry(pantryId, productId, quantity);
     }
 
+    /** @DELETE A PANTRY FOR AN ID **/
+    @DeleteMapping("/pantry/{id}/{username}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String username,@PathVariable Long id){
+        pantryService.delete(username, id);
+    }
 
-
-
+    /** @DELETE A PRODUCT FROM A PANTRY **/
+    @DeleteMapping("/pantry/{pantryId}/product/{productId}/{username}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProductPantry(@PathVariable String username,@PathVariable Long pantryId,@PathVariable Long productId){
+        pantryService.deleteProductPantry(username, pantryId, productId);
+    }
 
 }

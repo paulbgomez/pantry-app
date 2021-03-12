@@ -18,7 +18,7 @@
                 <div class="newProduct">
                   <div class="row mb-4">
                     <select>
-                      <option *ngFor="let product of productsDB" value="{{ product.barcode }}">{{ product.name }}</option>
+                      <option *ngFor="let product of productsDB" value="{{ product.id }}">{{ product.name }}</option>
                     </select>
                     <div class="col-3">
                       <button type="button" class="btn btn-danger btn-block" (click)="newProduct(pantry.id, product.id)">Add Product</button>
