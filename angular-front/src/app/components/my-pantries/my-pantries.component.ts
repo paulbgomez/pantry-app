@@ -4,7 +4,6 @@ import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {Pantry, Product} from '../../common/interfaces';
 
-
 @Component({
   selector: 'app-my-pantries',
   templateUrl: './my-pantries.component.html',
@@ -14,6 +13,7 @@ export class MyPantriesComponent implements OnInit {
 
   pantries = false;
   pantry: Pantry;
+  selectedProduct!: Product;
   pantryArray: Pantry[] = [];
   productsDB: Product[] = [];
 
@@ -67,6 +67,23 @@ export class MyPantriesComponent implements OnInit {
       this.productsDB = ListOfProducts;
       console.log(ListOfProducts);
     });
+  }
+
+  selectProduct(product: Product, pantryId: number): void{
+    this.usersService.getPantryById(pantryId).subscribe(pantry => {
+      this.usersService.addProductToPantry(pantry.id, product.id).subscribe();
+    });
+    this.selectedProduct = product;
+    this.sleep(1500).then(() => { this.usersService.getProductsFromPantry(pantryId).subscribe(); });
+  }
+
+  deleteProduct(pantryId: number, productId: number): void{
+    this.usersService.deleteProductFromPantry(pantryId, productId).subscribe();
+    this.sleep(1500).then(() => { this.usersService.getProductsFromPantry(pantryId).subscribe(); });
+  }
+
+  sleep(ms): Promise<any>{
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }

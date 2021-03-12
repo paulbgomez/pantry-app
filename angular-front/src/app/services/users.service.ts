@@ -39,6 +39,14 @@ export class UsersService {
   @GET ENDPOINTS
    **/
 
+  getPantryById(id: number): Observable<Pantry>{
+    return this.http.get<Pantry>(environment.host + `/pantry/${id}`, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    });
+  }
+
   getAllPantries(): Observable<Pantry[]>{
     return this.http.get<Pantry[]>(environment.host + '/pantry/all', {headers: new HttpHeaders({
         'Content-Type': 'application/json',

@@ -1,40 +1,48 @@
 <nav>
-  <span (click)="logout()">Log Out</span>
+  <span id="log-out" class="material-icons" (click)="logout()">person-off</span>
 </nav>
 
 <main>
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" id="accordionPantry">
           <div class="accordion-item" *ngFor="let pantry of pantryArray">
             <h2 class="accordion-header" id="heading_{{pantry.id}}">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{pantry.id}}" aria-expanded="false" aria-controls="collapse_{{pantry.id}}">
-                {{ pantry.name }}
+                <strong>{{ pantry.name }}</strong>
               </button>
             </h2>
-            <div id="collapse_{{pantry.id}}" class="accordion-collapse collapse show" aria-labelledby="heading_{{pantry.id}}" data-bs-parent="#accordionExample">
+            <div id="collapse_{{pantry.id}}" class="accordion-collapse collapse show" aria-labelledby="heading_{{pantry.id}}" data-bs-parent="#accordionPantry">
               <div class="accordion-body">
                 <div class="newProduct">
                   <div class="row mb-4">
-                    <select>
-                      <option *ngFor="let product of productsDB" value="{{ product.id }}">{{ product.name }}</option>
+                    <select [(ngModel)]="selectedProduct" (ngModelChange)="selectProduct($event, pantry.id)" >
+                      <option *ngFor="let product of productsDB" [ngValue]="product" >{{ product.name }}</option>
                     </select>
-                    <div class="col-3">
-                      <button type="button" class="btn btn-danger btn-block" (click)="newProduct(pantry.id, product.id)">Add Product</button>
-                    </div>
                   </div>
                 </div>
                 <div class="listOfProducts">
                   <div class="row mb-4" *ngFor="let product of pantry.ListOfProducts">
-                    <div class="col-6">
-                      <input class="form-control" type="text" value="{{ product.name }}">
+                    <div class="col-4">
+                      <h4 class="product-names-list">{{product.name}}</h4>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                       <input class="form-control" type="number" [(ngModel)]="product.stock">
                     </div>
-                    <div class="col-3">
-                      <button type="button" class="btn btn-primary btn-block" (click)="updateStock(pantry.id, product.id, product.stock)">Update Product</button>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-block" (click)="updateStock(pantry.id, product.id, product.stock)">
+                        <span class="material-icons">
+                        cached
+                        </span>
+                      </button>
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-block" (click)="deleteProduct(pantry.id, product.id)">
+                        <span class="material-icons">
+                        delete_outline
+                        </span>
+                      </button>
                     </div>
                   </div>
               </div>

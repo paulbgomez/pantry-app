@@ -11,6 +11,7 @@ import {MyPantriesComponent} from './components/my-pantries/my-pantries.componen
 import {AppRoutingModule} from './app-routing.module';
 import {PantryDetailsComponent} from './components/pantry-details/pantry-details.component';
 import {RegisterComponent} from './components/register/register.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {RegisterComponent} from './components/register/register.component';
     NavbarComponent,
     MyPantriesComponent,
     PantryDetailsComponent,
-    RegisterComponent
+    RegisterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
