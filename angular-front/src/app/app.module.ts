@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {CookieService} from 'ngx-cookie-service';
 import {HttpClientModule} from '@angular/common/http';
@@ -12,6 +12,16 @@ import {AppRoutingModule} from './app-routing.module';
 import {PantryDetailsComponent} from './components/pantry-details/pantry-details.component';
 import {RegisterComponent} from './components/register/register.component';
 import { FooterComponent } from './components/footer/footer.component';
+import {MatIconModule} from '@angular/material/icon';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material/button';
+import {MatOptionModule} from '@angular/material/core';
+import { MatSelectModule} from '@angular/material/select';
+import { FloatingButtonComponent } from './components/floating-button/floating-button.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+
 
 @NgModule({
   declarations: [
@@ -21,13 +31,23 @@ import { FooterComponent } from './components/footer/footer.component';
     MyPantriesComponent,
     PantryDetailsComponent,
     RegisterComponent,
-    FooterComponent
+    FooterComponent,
+    FloatingButtonComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

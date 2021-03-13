@@ -7,21 +7,24 @@ import {Pantry, Product} from '../../common/interfaces';
 @Component({
   selector: 'app-my-pantries',
   templateUrl: './my-pantries.component.html',
-  styleUrls: ['./my-pantries.component.css']
+  styleUrls: ['./my-pantries.component.scss']
 })
 export class MyPantriesComponent implements OnInit {
 
+  panelOpenState = false;
   pantries = false;
   pantry: Pantry;
   selectedProduct!: Product;
   pantryArray: Pantry[] = [];
   productsDB: Product[] = [];
 
+
   constructor(public usersService: UsersService, private cookies: CookieService, private router: Router) { }
 
   ngOnInit(): void {
    this.checkIsUserLogged();
   }
+
 
   checkIsUserLogged(): void {
     if (!this.cookies.check('token')) {
@@ -49,10 +52,6 @@ export class MyPantriesComponent implements OnInit {
     });
   }
 
-  logout(): void{
-    this.usersService.deleteCookies();
-    this.router.navigate(['login']).then();
-  }
 
   updateStock(pantryId: number, productId: number, stock: number): void{
     this.usersService.updateStock(pantryId, productId, stock).subscribe();

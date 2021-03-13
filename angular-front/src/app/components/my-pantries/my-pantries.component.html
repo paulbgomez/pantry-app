@@ -1,58 +1,63 @@
-<nav>
-  <span id="log-out" class="material-icons" (click)="logout()">person-off</span>
-</nav>
 
 <main>
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="accordion" id="accordionPantry">
-          <div class="accordion-item" *ngFor="let pantry of pantryArray">
-            <h2 class="accordion-header" id="heading_{{pantry.id}}">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{pantry.id}}" aria-expanded="false" aria-controls="collapse_{{pantry.id}}">
-                <strong>{{ pantry.name }}</strong>
-              </button>
-            </h2>
-            <div id="collapse_{{pantry.id}}" class="accordion-collapse collapse show" aria-labelledby="heading_{{pantry.id}}" data-bs-parent="#accordionPantry">
-              <div class="accordion-body">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false"
+                               *ngFor="let pantry of pantryArray"
+                                class="my-2">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ pantry.name }}
+              </mat-panel-title>
+              <mat-panel-description>
+                Currently I am {{panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
                 <div class="newProduct">
                   <div class="row mb-4">
-                    <select [(ngModel)]="selectedProduct" (ngModelChange)="selectProduct($event, pantry.id)" >
-                      <option *ngFor="let product of productsDB" [ngValue]="product" >{{ product.name }}</option>
-                    </select>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Favorite food</mat-label>
+                      <mat-select [(ngModel)]="selectedProduct" (ngModelChange)="selectProduct($event, pantry.id)">
+                        <mat-option *ngFor="let product of productsDB" [value]="product">
+                          {{ product.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
                   </div>
                 </div>
                 <div class="listOfProducts">
                   <div class="row mb-4" *ngFor="let product of pantry.ListOfProducts">
-                    <div class="col-4">
-                      <h4 class="product-names-list">{{product.name}}</h4>
-                    </div>
-                    <div class="col-2">
-                      <input class="form-control" type="number" [(ngModel)]="product.stock">
-                    </div>
-                    <div class="col-2">
-                      <button type="button" class="btn btn-block" (click)="updateStock(pantry.id, product.id, product.stock)">
-                        <span class="material-icons">
-                        cached
-                        </span>
-                      </button>
-                    </div>
-                    <div class="col-2">
-                      <button type="button" class="btn btn-block" (click)="deleteProduct(pantry.id, product.id)">
-                        <span class="material-icons">
-                        delete_outline
-                        </span>
-                      </button>
-                    </div>
+                      <div class="col-4">
+                        <h4 class="product-names-list">{{product.name}}</h4>
+                      </div>
+                      <div class="col-2">
+                        <input class="form-control" type="number" [(ngModel)]="product.stock">
+                      </div>
+                      <div class="col-2">
+                        <div class="example-button-container">
+                          <button (click)="updateStock(pantry.id, product.id, product.stock)" mat-mini-fab color="primary" >
+                            <mat-icon>cached</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="example-button-container">
+                          <button (click)="deleteProduct(pantry.id, product.id)" mat-mini-fab color="primary" >
+                            <mat-icon>delete_outline</mat-icon>
+                          </button>
+                        </div>
+                      </div>
                   </div>
-              </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                </div>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
     </div>
   </div>
+<app-floating-button></app-floating-button>
 </main>
 
 
