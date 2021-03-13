@@ -21,6 +21,8 @@ import { FloatingButtonComponent } from './components/floating-button/floating-b
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogContentComponent } from './components/dialog-content/dialog-content.component';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import {MatInputModule} from '@angular/material/input';
     PantryDetailsComponent,
     RegisterComponent,
     FooterComponent,
-    FloatingButtonComponent
+    FloatingButtonComponent,
+    DialogContentComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {MatInputModule} from '@angular/material/input';
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

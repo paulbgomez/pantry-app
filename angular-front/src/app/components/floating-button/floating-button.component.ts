@@ -15,20 +15,9 @@ export class FloatingButtonComponent implements OnInit {
   fabButtons = [
     {
       icon: 'person_off'
-    },
-    {
-      icon: 'view_headline'
-    },
-    {
-      icon: 'room'
-    },
-    {
-      icon: 'lightbulb_outline'
-    },
-    {
-      icon: 'lock'
     }
   ];
+
   buttons = [];
   fabTogglerState = 'inactive';
 

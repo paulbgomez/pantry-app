@@ -3,24 +3,23 @@
   }
   html,
   body {
-    background: #ecf0f3;
+    background-color: rgba(255, 255, 255, .7);
   }
   h1 {
     margin: 0;
     padding: 0;
   }
   .custom-form {
-    min-width: 300px;
+    background-color: rgb(238, 238, 238);
+    max-width: 500px;
     max-width: 60%;
     margin: 0px auto;
-    background: rgba(255, 255, 255, 0.15);
     padding: 2rem 3rem;
     margin: auto;
-    border-radius: 2.5rem;
-    background-color: #ecf0f3;
-    box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
+    border-radius: 1rem;
     color: black;
     margin-top: 10rem;
+    box-shadow: 15px 15px 20px #656565;
   }
   .custom-form input {
     display: block;
@@ -29,10 +28,7 @@
     border-radius: 0.5rem;
     padding: 1rem;
     border: none;
-    box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.8), inset 5px 5px 10px
-        rgba(0, 0, 0, 0.1);
     border: 0 none;
-    background: #ebf5fc;
   }
   .custom-form button {
     text-transform: uppercase;
@@ -45,8 +41,7 @@
     width: 100%;
     display: block;
     padding: 0.8rem 1rem;
-    margin: 10px;
-    border-radius: 1.5rem;
-    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
     cursor: pointer;
   }

@@ -8,9 +8,11 @@
                                (closed)="panelOpenState = false"
                                *ngFor="let pantry of pantryArray"
                                 class="my-2">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header >
               <mat-panel-title>
+                <h2 class="title-of-node">
                 {{ pantry.name }}
+                </h2>
               </mat-panel-title>
               <mat-panel-description>
                 Currently I am {{panelOpenState ? 'open' : 'closed'}}
@@ -29,23 +31,23 @@
                   </div>
                 </div>
                 <div class="listOfProducts">
-                  <div class="row mb-4" *ngFor="let product of pantry.ListOfProducts">
-                      <div class="col-4">
+                  <div class="row mb-4" *ngFor="let product of pantry.ListOfProducts; let i = index">
+                      <div class="col-9">
                         <h4 class="product-names-list">{{product.name}}</h4>
                       </div>
-                      <div class="col-2">
+                      <div class="col-1">
                         <input class="form-control" type="number" [(ngModel)]="product.stock">
                       </div>
-                      <div class="col-2">
+                      <div class="col-1" align="center">
                         <div class="example-button-container">
-                          <button (click)="updateStock(pantry.id, product.id, product.stock)" mat-mini-fab color="primary" >
+                          <button (click)="openDialog(pantry.id, product.id, product.stock)" mat-mini-fab color="primary" >
                             <mat-icon>cached</mat-icon>
                           </button>
                         </div>
                       </div>
-                      <div class="col-2">
+                      <div class="col-1" align="center">
                         <div class="example-button-container">
-                          <button (click)="deleteProduct(pantry.id, product.id)" mat-mini-fab color="primary" >
+                          <button (click)="deleteProduct(pantry.id, product.id, i)" mat-mini-fab color="primary" >
                             <mat-icon>delete_outline</mat-icon>
                           </button>
                         </div>

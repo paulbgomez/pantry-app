@@ -8,7 +8,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background: grey;
   margin-right: auto;
   margin-left: auto;
-  background: url(https://image.freepik.com/free-vector/fruits-vegetables-flat-hand-drawn-seamless-pattern_73378-661.jpg);
+  background: url('./assets/light-theme.png');
   background-repeat: repeat;
   background-position: center 166px !important;
+}
+
+.mat-expansion-indicator::after {
+  color: rgb(66, 66, 66);
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex{
+  background-color: rgb(66, 66, 66);
 }

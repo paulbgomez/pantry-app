@@ -9,11 +9,11 @@
     <i class="material-icons" [@fabToggler]="{value: fabTogglerState}">add</i> <!-- Animation here -->
   </button>
   <div [@speedDialStagger]="buttons.length"> <!-- and here -->
-    <button *ngFor="let btn of buttons"
+    <button *ngFor="let btn of buttons; let i = index"
             mat-mini-fab
             class="fab-secondary"
             color="primary">
-      <i class="material-icons">{{btn.icon}}</i>
+      <i class="material-icons" >{{btn.icon}}</i>
     </button>
   </div>
 </div>

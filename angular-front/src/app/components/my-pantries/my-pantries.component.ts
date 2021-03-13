@@ -3,6 +3,8 @@ import {UsersService} from 'src/app/services/users.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {Pantry, Product} from '../../common/interfaces';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogContentComponent} from '../dialog-content/dialog-content.component';
 
 @Component({
   selector: 'app-my-pantries',
@@ -17,9 +19,10 @@ export class MyPantriesComponent implements OnInit {
   selectedProduct!: Product;
   pantryArray: Pantry[] = [];
   productsDB: Product[] = [];
+  newStock: number;
 
 
-  constructor(public usersService: UsersService, private cookies: CookieService, private router: Router) { }
+  constructor(public usersService: UsersService, private cookies: CookieService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
    this.checkIsUserLogged();
@@ -52,6 +55,14 @@ export class MyPantriesComponent implements OnInit {
     });
   }
 
+  openDialog(pantryId: number, productId: number, stock: number): void {
+    const dialogRef = this.dialog.open(DialogContentComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true){
+        this.updateStock(pantryId, productId, stock);
+      }
+    });
+  }
 
   updateStock(pantryId: number, productId: number, stock: number): void{
     this.usersService.updateStock(pantryId, productId, stock).subscribe();
@@ -64,25 +75,41 @@ export class MyPantriesComponent implements OnInit {
   getAllProductsFromDB(): void{
     this.usersService.getProducts().subscribe(ListOfProducts => {
       this.productsDB = ListOfProducts;
-      console.log(ListOfProducts);
     });
   }
 
   selectProduct(product: Product, pantryId: number): void{
-    this.usersService.getPantryById(pantryId).subscribe(pantry => {
-      this.usersService.addProductToPantry(pantry.id, product.id).subscribe();
+    this.usersService.getPantryById(pantryId).subscribe(() => {
+      this.usersService.addProductToPantry(pantryId, product.id).subscribe(() => {
+        this.pantryArray.filter(pantry => {
+          if (pantry.id === pantryId){
+            pantry.ListOfProducts.push(product);
+          }
+        });
+        this.updateOnePantry(pantryId);
+      });
     });
     this.selectedProduct = product;
-    this.sleep(1500).then(() => { this.usersService.getProductsFromPantry(pantryId).subscribe(); });
   }
 
-  deleteProduct(pantryId: number, productId: number): void{
-    this.usersService.deleteProductFromPantry(pantryId, productId).subscribe();
-    this.sleep(1500).then(() => { this.usersService.getProductsFromPantry(pantryId).subscribe(); });
+  updateOnePantry(pantryId: number): void {
+    this.usersService.getPantryById(pantryId).subscribe(pantry => {
+      this.usersService.getProductsFromPantry(pantryId).subscribe(pantryUpdated => {
+        pantry.ListOfProducts = pantryUpdated;
+      });
+    });
   }
 
-  sleep(ms): Promise<any>{
-    return new Promise(resolve => setTimeout(resolve, ms));
+  deleteProduct(pantryId: number, productId: number, i: number): void{
+    this.usersService.deleteProductFromPantry(pantryId, productId).subscribe(() => {
+      this.pantryArray.filter(pantry => {
+        if (pantry.id === pantryId){
+          pantry.ListOfProducts.splice(i, 1);
+        }
+      });
+      this.updateOnePantry(pantryId);
+    });
   }
+
 
 }

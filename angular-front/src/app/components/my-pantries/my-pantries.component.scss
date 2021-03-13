@@ -1,16 +1,28 @@
-.product-names-list{
-  font-family: 'Patrick Hand SC', cursive;
-  font-size: x-large;
-}
-
 .mat-form-field + .mat-form-field {
   margin-left: 8px;
 }
 
 .mat-expansion-panel{
-  background-color: rgba(186, 194, 186, 0.8);
-  color: white;
+  background-color: rgb(238, 238, 238);
+  color: rgb(66, 66, 66);
 }
+
+.mat-panel-title{
+  color: rgb(66, 66, 66);
+}
+
+.title-of-node{
+  color: rgb(66, 66, 66);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+
+
+/*
+class="mat-form-field-flex ng-tns-c83-3"
+ */
+
 
 /*
 #A198AF

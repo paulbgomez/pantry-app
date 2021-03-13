@@ -102,8 +102,6 @@ public class PantryService implements IPantryService {
         for (ProductInPantry product: pantry.getProductsInPantry()){
             if(product.getProduct().getId().equals(productId)){
                 product.setQuantity(quantity);
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
             }
         }
         pantryRepository.save(pantry);
@@ -113,6 +111,11 @@ public class PantryService implements IPantryService {
         Pantry pantry = checkPantry(pantryId);
         Product product = checkProduct(productId);
 
+        for (ProductInPantry productIncluded: pantry.getProductsInPantry()) {
+            if (productIncluded.getId().equals(productId)){
+                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Product already in the pantry");
+            }
+        }
         CompositeKey compositeKey = new CompositeKey(pantryId, productId);
 
         ProductInPantry productInPantry = new ProductInPantry(
@@ -125,7 +128,7 @@ public class PantryService implements IPantryService {
         if(!pantry.getProductsInPantry().contains(productInPantry)){
             pantry.getProductsInPantry().add(productInPantry);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Product already in the pantry");
         }
         productInPantryRepository.save(productInPantry);
     }
