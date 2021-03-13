@@ -19,7 +19,7 @@
                 <div class="newProduct">
                   <div class="row mb-4">
                     <mat-form-field appearance="fill">
-                      <mat-label>Favorite food</mat-label>
+                      <mat-label>Select product you want to add</mat-label>
                       <mat-select [(ngModel)]="selectedProduct" (ngModelChange)="selectProduct($event, pantry.id)">
                         <mat-option *ngFor="let product of productsDB" [value]="product">
                           {{ product.name }}
