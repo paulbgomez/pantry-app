@@ -72,6 +72,11 @@ public class PantryController implements IPantryController {
         pantryClient.updatePantry(pantryId, productId, quantity, "Bearer " + getPantryAuthOk());
     }
 
+    @PatchMapping("new/pantry/name/{pantryId}/{newName}")
+    public PantryDTO editPantryName(@PathVariable Long pantryId,@PathVariable String newName){
+        return pantryClient.editPantryName(pantryId, newName, "Bearer " + getPantryAuthOk());
+    }
+
     /*
     DELETE REQUESTS
      */

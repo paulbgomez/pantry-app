@@ -18,5 +18,34 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .mat-form-field-appearance-fill .mat-form-field-flex{
-  background-color: rgb(66, 66, 66);
+  background-color: rgb(250, 250, 250);
 }
+
+.mat-select-value{
+  color: rgb(66, 66, 66);
+}
+
+#mat-label-select-product{
+  color: rgb(123, 31, 162);
+}
+
+.mat-select-panel{
+  color: rgb(250, 250, 250);
+}
+
+.mat-option.mat-active{
+  color:  rgb(250, 250, 250);
+}
+
+.mat-option.mat-active:hover{
+  color: rgb(105, 240, 174);
+}
+
+.mat-option{
+  color:  rgb(250, 250, 250);
+}
+
+.mat-option:hover{
+  color: rgb(105, 240, 174);
+}
+

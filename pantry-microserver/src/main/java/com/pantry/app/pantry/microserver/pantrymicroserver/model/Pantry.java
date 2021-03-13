@@ -23,7 +23,7 @@ public class Pantry {
     LocalDateTime creationDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pantry")
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
     Set<ProductInPantry> productsInPantry;
 
     public Pantry() {

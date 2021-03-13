@@ -66,6 +66,12 @@ public class PantryController implements IPantryController {
         pantryService.updatePantry(pantryId, productId, quantity);
     }
 
+    @PatchMapping("new/pantry/name/{pantryId}/{newName}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public PantryDTO editPantryName(@PathVariable Long pantryId,@PathVariable String newName){
+        return pantryService.editPantryName(pantryId, newName);
+    }
+
     /** @DELETE A PANTRY FOR AN ID **/
     @DeleteMapping("/pantry/{id}/{username}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

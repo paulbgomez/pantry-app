@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {UsersService} from 'src/app/services/users.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
@@ -21,13 +21,11 @@ export class MyPantriesComponent implements OnInit {
   productsDB: Product[] = [];
   newStock: number;
 
-
   constructor(public usersService: UsersService, private cookies: CookieService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
    this.checkIsUserLogged();
   }
-
 
   checkIsUserLogged(): void {
     if (!this.cookies.check('token')) {
@@ -68,14 +66,14 @@ export class MyPantriesComponent implements OnInit {
     this.usersService.updateStock(pantryId, productId, stock).subscribe();
   }
 
-  newProduct(pantryId: number, productId: number): void{
-    this.usersService.addProductToPantry(pantryId, productId).subscribe();
-  }
-
   getAllProductsFromDB(): void{
     this.usersService.getProducts().subscribe(ListOfProducts => {
       this.productsDB = ListOfProducts;
     });
+  }
+
+  deletePantry(pantryId: number): void{
+    this.usersService.deletePantry(pantryId).subscribe();
   }
 
   selectProduct(product: Product, pantryId: number): void{

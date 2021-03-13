@@ -26,4 +26,6 @@ public interface IPantryController {
     void addProductToPantry(Long pantryId, Long productId);
 
     void deleteProductPantry(String username, Long pantryId, Long productId);
+
+    PantryDTO editPantryName(Long pantryId, String newName);
 }

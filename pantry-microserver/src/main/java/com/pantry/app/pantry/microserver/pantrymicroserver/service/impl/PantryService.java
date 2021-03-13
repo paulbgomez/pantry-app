@@ -107,6 +107,14 @@ public class PantryService implements IPantryService {
         pantryRepository.save(pantry);
     }
 
+    public PantryDTO editPantryName(Long pantryId, String newName){
+        System.out.println("Line 111");
+        Pantry pantry = checkPantry(pantryId);
+        pantry.setName(newName);
+        pantryRepository.save(pantry);
+        return new PantryDTO(pantry);
+    }
+
     public void addProductToPantry(Long pantryId, Long productId) {
         Pantry pantry = checkPantry(pantryId);
         Product product = checkProduct(productId);

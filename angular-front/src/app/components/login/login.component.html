@@ -1,24 +1,56 @@
-<div *ngIf="!logged" class="login">
-    <form class="custom-form" method="post">
-      <h1>Login</h1>
-      <input
-        type="text"
-        [(ngModel)]="username"
-        name="username"
-        placeholder="Username"
-        required="required"
-      />
-      <input
-        type="password"
-        [(ngModel)]="password"
-        name="password"
-        placeholder="Password"
-        required="required"
-      />
-      <button type="submit" (click)="login()">Log in</button>
-      <button type="submit" (click)="register()">Register</button>
-    </form>
-  </div>
+<!--<div *ngIf="!logged" class="login">-->
+<!--    <form class="custom-form" method="post">-->
+<!--      <h1>Login</h1>-->
+<!--      <input-->
+<!--        type="text"-->
+<!--        [(ngModel)]="username"-->
+<!--        name="username"-->
+<!--        placeholder="Username"-->
+<!--        required="required"-->
+<!--      />-->
+<!--      <input-->
+<!--        type="password"-->
+<!--        [(ngModel)]="password"-->
+<!--        name="password"-->
+<!--        placeholder="Password"-->
+<!--        required="required"-->
+<!--      />-->
+<!--      <button type="submit" (click)="login()">Log in</button>-->
+<!--      <button type="submit" (click)="register()">Register</button>-->
+<!--    </form>-->
+<!--  </div>-->
+
+<div class="container">
+  <h1>Pantry-App</h1>
+
+  <form class="custom-form" (ngSubmit)="onSubmit(formDirective)" [formGroup]="form" #formDirective = "ngForm">
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Username</mat-label>
+      <input type="text" matInput formControlName="username" placeholder="fluffy16">
+      <mat-error *ngIf="username.hasError('required')">
+        Please enter a valid username
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password">
+      <mat-error *ngIf="password.hasError('required')">
+        Password can not be empty
+      </mat-error>
+    </mat-form-field>
+
+
+    <button mat-flat-button type="submit" [disabled]="form.invalid">
+      Log in
+    </button>
+
+    <p>Don't have an account? <a (click) = "openDialog()">Register here.</a> </p>
+
+  </form>
+
+</div>
 
 
 

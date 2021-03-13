@@ -4,6 +4,7 @@ import com.pantry.app.edgeservice.auth.security.AuthenticationRequest;
 import com.pantry.app.edgeservice.dto.PantryDTO;
 import com.pantry.app.edgeservice.dto.ProductDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,9 @@ public interface PantryClient {
 
     @PatchMapping("/pantry/{pantryId}/{productId}/{quantity}")
     void updatePantry(@PathVariable Long pantryId, @PathVariable Long productId, @PathVariable Integer quantity, @RequestHeader(value = "Authorization") String authorizationHeader);
+
+    @PatchMapping("new/pantry/name/{pantryId}/{newName}")
+    PantryDTO editPantryName(@PathVariable Long pantryId,@PathVariable String newName, @RequestHeader(value = "Authorization") String authorizationHeader);
 
     @GetMapping("/product/{id}")
     ProductDTO findProductById(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader);

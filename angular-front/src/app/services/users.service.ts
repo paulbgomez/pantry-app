@@ -84,7 +84,7 @@ export class UsersService {
    **/
 
   addPantry(): Observable<any>{
-    return this.http.post(environment.host + '/pantry', null,
+    return this.http.post<any>(environment.host + '/pantry', null,
       {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -114,6 +114,16 @@ export class UsersService {
         Authorization: 'Bearer ' + this.getToken()
       })
     });
+  }
+
+  editPantryName(pantryId: number, newName: string): Observable<any>{
+    return this.http.patch<any>(environment.host +  `/new/pantry/name/${pantryId}/${newName}`,
+      null,
+      {headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.getToken()
+        })
+      });
   }
 
   /**

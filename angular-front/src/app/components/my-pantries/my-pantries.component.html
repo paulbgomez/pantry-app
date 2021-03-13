@@ -14,14 +14,11 @@
                 {{ pantry.name }}
                 </h2>
               </mat-panel-title>
-              <mat-panel-description>
-                Currently I am {{panelOpenState ? 'open' : 'closed'}}
-              </mat-panel-description>
             </mat-expansion-panel-header>
                 <div class="newProduct">
                   <div class="row mb-4">
                     <mat-form-field appearance="fill">
-                      <mat-label>Select product you want to add</mat-label>
+                      <mat-label id="mat-label-select-product" >Select product you want to add</mat-label>
                       <mat-select [(ngModel)]="selectedProduct" (ngModelChange)="selectProduct($event, pantry.id)">
                         <mat-option *ngFor="let product of productsDB" [value]="product">
                           {{ product.name }}
@@ -52,6 +49,12 @@
                           </button>
                         </div>
                       </div>
+                  </div>
+                  <div class="row mb-4">
+                    <button (click)="deletePantry(pantry.id)" mat-mini-fab id="delete-pantry">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                    <p class="align-center">Delete this pantry</p>
                   </div>
                 </div>
           </mat-expansion-panel>
