@@ -6,7 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {DialogAddPantryComponent} from '../dialog-add-pantry/dialog-add-pantry.component';
 import {Email, Pantry} from '../../common/interfaces';
 import {MyPantriesComponent} from '../my-pantries/my-pantries.component';
-import * as EventEmitter from 'events';
+import {EventEmitter} from '@angular/core';
 import {EmailDialogComponent} from '../email-dialog/email-dialog.component';
 
 @Component({
@@ -32,7 +32,8 @@ export class FloatingButtonComponent implements OnInit {
 
   buttons = [];
   fabTogglerState = 'inactive';
-  pantryArray: Pantry[] = [];
+
+  @Output() buttonVar = new EventEmitter();
 
   constructor(public usersService: UsersService, private router: Router, public dialog: MatDialog) { }
 
@@ -80,12 +81,7 @@ export class FloatingButtonComponent implements OnInit {
   }
 
   addPantry(): void{
-      this.usersService.addPantry().subscribe(pantry => {
-        this.usersService.getAllPantries().subscribe(listOfPantries => {
-          this.pantryArray = listOfPantries;
-        });
-        this.pantryArray.push(pantry);
-      });
+      this.usersService.addPantry().subscribe(pantry => this.buttonVar.emit(pantry));
   }
 
   openEmailDialog(): void{

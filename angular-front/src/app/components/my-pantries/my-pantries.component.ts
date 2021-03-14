@@ -76,6 +76,10 @@ export class MyPantriesComponent implements OnInit {
     });
   }
 
+  addNewPantry(pantry: Pantry): void{
+    this.pantryArray.push(pantry);
+  }
+
   openDialog(pantryId: number, productId: number, stock: number): void {
     const dialogRef = this.dialog.open(DialogContentComponent);
     dialogRef.afterClosed().subscribe(result => {
