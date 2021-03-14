@@ -4,9 +4,10 @@ import {UsersService} from '../../services/users.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogAddPantryComponent} from '../dialog-add-pantry/dialog-add-pantry.component';
-import {Pantry} from '../../common/interfaces';
+import {Email, Pantry} from '../../common/interfaces';
 import {MyPantriesComponent} from '../my-pantries/my-pantries.component';
 import * as EventEmitter from 'events';
+import {EmailDialogComponent} from '../email-dialog/email-dialog.component';
 
 @Component({
   selector: 'app-floating-button',
@@ -56,7 +57,7 @@ export class FloatingButtonComponent implements OnInit {
         this.logout();
         break;
       case 1:
-        console.log('send email');
+        this.openEmailDialog();
         break;
       case 2:
         this.openDialog();
@@ -86,5 +87,11 @@ export class FloatingButtonComponent implements OnInit {
         this.pantryArray.push(pantry);
       });
   }
+
+  openEmailDialog(): void{
+   const dialogRef = this.dialog.open(EmailDialogComponent);
+   dialogRef.afterClosed().subscribe();
+  }
+
 
 }

@@ -21,6 +21,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogContentComponent } from './components/dialog-content/dialog-content.component';
 import { DialogAddPantryComponent } from './components/dialog-add-pantry/dialog-add-pantry.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { EmailDialogComponent } from './components/email-dialog/email-dialog.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     RegisterComponent,
     FloatingButtonComponent,
     DialogContentComponent,
-    DialogAddPantryComponent
+    DialogAddPantryComponent,
+    EmailDialogComponent
   ],
   imports: [
     BrowserModule,

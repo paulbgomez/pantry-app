@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CookieService} from 'ngx-cookie-service';
 import {environment} from '../../environments/environment';
-import {Pantry, ProductWithStock} from '../common/interfaces';
+import {Email, Pantry, ProductWithStock} from '../common/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,14 @@ export class UsersService {
   deleteCookies(): void {
     this.cookies.delete('token');
     this.cookies.delete('username');
+  }
+
+  sendEmail(email: Email): void{
+    this.http.post('http://localhost:8089/email/send', email, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    });
   }
 
   /**
