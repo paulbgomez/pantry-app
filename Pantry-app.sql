@@ -36,7 +36,23 @@ INSERT INTO product (id, name, category, barcode) VALUES
 (2, 'Chicken Wings', 'MEAT', 333222),
 (3, 'Coriander', 'VEGETABLES',  111222),
 (4, 'Avocado', 'VEGETABLES', 999888),
-(5, 'Soap', 'CLEAN', 000007);
+(5, 'Soap', 'CLEAN_PRODUCTS', 000007),
+(6, 'Lentils', 'VEGETABLES', 127456),
+(7, 'Beans', 'CANNED_PRODUCTS', 334222),
+(8, 'Potatoes', 'VEGETABLES',  111522),
+(9, 'Carrots', 'VEGETABLES', 999288),
+(10, 'Water', 'BEVERAGE', 000337),
+(11, 'Cheese', 'FRESH_PRODUCTS', 120056),
+(12, 'Cucumber', 'VEGETABLES', 333212),
+(13, 'Nuts', 'NUTS',  114122),
+(14, 'Beer', 'ALCOHOLIC_DRINKS', 993888),
+(15, 'Eggs', 'FRESH_PRODUCTS', 000001),
+(16, 'Fish', 'FRESH_PRODUCTS', 124406),
+(17, 'Ribs', 'MEAT', 331232),
+(18, 'Tomato Sauce', 'CANNED_PRODUCTS',  119002),
+(19, 'Tomatoes', 'VEGETABLES', 951488),
+(20, 'Chocolate', 'SWEETS', 967288),
+(21, 'Rice', 'GRAIN', 001987);
 
 INSERT INTO product_in_pantry (pantry_id, product_id, quantity) VALUES
 (1, 1, 5),

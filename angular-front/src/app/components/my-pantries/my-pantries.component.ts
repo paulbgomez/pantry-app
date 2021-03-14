@@ -21,34 +21,34 @@ export class MyPantriesComponent implements OnInit {
   pantry: Pantry;
   selectedProduct!: Product;
   pantryArray: Pantry[] = [];
-  productsDB: any[] = [];
+  productsDB: Product[] = [];
   newStock: number;
-
-  myControl = new FormControl();
-  filteredOptions: Observable<any>;
+  //
+  // myControl = new FormControl();
+  // filteredOptions: Observable<any>;
 
   constructor(public usersService: UsersService, private cookies: CookieService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
    this.checkIsUserLogged();
-   this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
-        map(product => product ? this._filter(product) : this.productsDB.slice())
-      );
+   // this.filteredOptions = this.myControl.valueChanges
+   //    .pipe(
+   //      startWith(''),
+   //      map(value => typeof value === 'string' ? value : value.name),
+   //      map(product => product ? this._filter(product) : this.productsDB.slice())
+   //    );
   }
 
-
-  displayFn(product: Product): string {
-    return product && product.name ? product.name : '';
-  }
-
-  private _filter(name: string): Product[] {
-    const filterValue = name.toLowerCase();
-
-    return this.productsDB.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-  }
+  //
+  // displayFn(product: Product): string {
+  //   return product && product.name ? product.name : '';
+  // }
+  //
+  // private _filter(name: string): Product[] {
+  //   const filterValue = name.toLowerCase();
+  //
+  //   return this.productsDB.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  // }
 
   checkIsUserLogged(): void {
     if (!this.cookies.check('token')) {
