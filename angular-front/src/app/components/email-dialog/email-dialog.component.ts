@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {UsersService} from '../../services/users.service';
-import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {Email} from '../../common/interfaces';
 
@@ -20,7 +19,6 @@ export class EmailDialogComponent implements OnInit {
 
   constructor(
     private userService: UsersService,
-    private router: Router,
     public dialog: MatDialog) {
     this.address = new FormControl('', [Validators.required, Validators.email]);
     this.subject = new FormControl('', [Validators.required]);

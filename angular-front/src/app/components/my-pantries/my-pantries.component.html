@@ -55,22 +55,22 @@
                       <div class="col-1" align="center">
                         <div class="example-button-container">
                           <button (click)="openDialog(pantry.id, product.id, product.stock)" mat-mini-fab color="primary" >
-                            <mat-icon>cached</mat-icon>
+                            <mat-icon data-bs-toggle="tooltip" data-bs-placement="bottom" title="Update this product stock">cached</mat-icon>
                           </button>
                         </div>
                       </div>
                       <div class="col-1" align="center">
                         <div class="example-button-container">
                           <button (click)="deleteProduct(pantry.id, product.id, i)" mat-mini-fab color="primary" >
-                            <mat-icon>delete_outline</mat-icon>
+                            <mat-icon data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete this product">delete_outline</mat-icon>
                           </button>
                         </div>
                       </div>
                   </div>
                   <div class="row mb-4">
                     <div class="col-1">
-                      <button (click)="deletePantry(pantry.id)" mat-mini-fab id="delete-pantry">
-                        <mat-icon>delete_outline</mat-icon>
+                      <button (click)="deletePantry(pantry.id)" mat-mini-fab id="delete-pantry" >
+                        <mat-icon data-bs-toggle="tooltip" data-bs-placement="right" title="Delete this pantry" >delete_outline</mat-icon>
                       </button>
                     </div>
                   </div>
