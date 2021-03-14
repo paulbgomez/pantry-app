@@ -33,12 +33,20 @@ In order to authenticate you will need to log in into the app.
 
 Just log in and add a pantry to your user. Once there you can:
 
-  -select and add products
-  -modify stock
-  -delete products or pantries
-  -send us an email
+- select and add products
+- modify stock
+- delete products or pantries
+- shoot us an email
 
 :warning:  The gateway service uses the port: 8081  :warning:
 
 Full rework upcoming with: dark-mode, autocomplete input for products, barcode scanner, shareable pantries...and more! 
 
+
+![image-1](https://github.com/paulbgomez/pantry-app/blob/main/images/Captura%20de%20pantalla%202021-03-14%20a%20las%2021.55.16.png?raw=true)
+![image-2](https://github.com/paulbgomez/pantry-app/blob/main/images/Captura%20de%20pantalla%202021-03-14%20a%20las%2022.22.24.png?raw=true)
+![image-3](https://github.com/paulbgomez/pantry-app/blob/main/images/Captura%20de%20pantalla%202021-03-14%20a%20las%2022.22.13.png?raw=true)
+![image-4](https://github.com/paulbgomez/pantry-app/blob/main/images/Captura%20de%20pantalla%202021-03-14%20a%20las%2021.54.57.png?raw=true)
+![image-5](https://github.com/paulbgomez/pantry-app/blob/main/images/Captura%20de%20pantalla%202021-03-14%20a%20las%2022.22.33.png?raw=true)
+![image-6](https://github.com/paulbgomez/pantry-app/blob/main/images/Captura%20de%20pantalla%202021-03-14%20a%20las%2011.05.17.png?raw=true)
+![image-7](https://github.com/paulbgomez/pantry-app/blob/main/images/Captura%20de%20pantalla%202021-03-14%20a%20las%2021.55.04.png?raw=true)
