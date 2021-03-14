@@ -8,6 +8,7 @@ public class Email {
 
     public Email() {
     }
+
     public Email(String textMessage, String address, String subject) {
         setTextMessage(textMessage);
         setAddress(address);

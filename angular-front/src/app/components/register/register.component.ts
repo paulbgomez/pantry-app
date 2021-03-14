@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(user).subscribe(data => {
       this.userService.setToken(data.jwt);
       form.resetForm();
-      this.router.navigate(['']).then();
+      this.router.navigate(['login']).then();
     }, error => {
       alert('Something went wrong');
     });

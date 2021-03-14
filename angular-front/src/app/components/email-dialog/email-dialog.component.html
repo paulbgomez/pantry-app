@@ -1,41 +1,42 @@
 <div class="container">
 
-  <form class="custom-form" (ngSubmit)="onSubmit(formDirective)" [formGroup]="form" #formDirective = "ngForm">
+  <mat-dialog-content>
+    <form class="custom-form" (ngSubmit)="onSubmit(formDirective)" [formGroup]="form" #formDirective = "ngForm">
 
-    <div class="row py-1">
-      <mat-form-field >
-        <mat-label>Address</mat-label>
-        <input type="email" matInput formControlName="address" placeholder="address">
-        <mat-error *ngIf="address.hasError('required')">
-          Please enter a valid email
-        </mat-error>
-      </mat-form-field>
-    </div>
+      <div class="row py-1">
+        <mat-form-field >
+          <mat-label>Address</mat-label>
+          <input type="email" matInput formControlName="address" placeholder="address">
+          <mat-error *ngIf="address.hasError('required')">
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="row py-1">
-      <mat-form-field >
-        <mat-label>Subject</mat-label>
-        <input type="text" matInput formControlName="subject">
-        <mat-error *ngIf="subject.hasError('required')">
-          Subject can not be empty
-        </mat-error>
-      </mat-form-field>
-    </div>
+      <div class="row py-1">
+        <mat-form-field >
+          <mat-label>Subject</mat-label>
+          <input type="text" matInput formControlName="subject">
+          <mat-error *ngIf="subject.hasError('required')">
+            Subject can not be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="row py-1">
-      <mat-form-field >
-        <mat-label>Content</mat-label>
-        <textarea rows="3" type="text" matInput formControlName="content" placeholder="content"></textarea>
-        <mat-error *ngIf="content.hasError('required')">
-          Content can not be empty
-        </mat-error>
-      </mat-form-field>
-    </div>
+      <div class="row py-1">
+        <mat-form-field >
+          <mat-label>Content</mat-label>
+          <textarea rows="3" type="text" matInput formControlName="content" placeholder="content"></textarea>
+          <mat-error *ngIf="content.hasError('required')">
+            Content can not be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <button mat-flat-button type="submit" [disabled]="form.invalid">
-      Send
-    </button>
+      <button [mat-dialog-close]="true" mat-flat-button type="submit" [disabled]="form.invalid">
+        Send
+      </button>
 
-  </form>
-
+    </form>
+  </mat-dialog-content>
 </div>
