@@ -21,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +43,9 @@ public class PantryService implements IPantryService {
     ProductInPantryRepository productInPantryRepository;
 
     private Pantry checkPantry(Long id) {
-        return pantryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found"));
+        Pantry pantry = pantryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pantry not found"));
+        pantry.setLastTimeUpdated(LocalDateTime.now());
+        return pantry;
     }
 
     private UserDTO createUserWithAuth(String username){
@@ -61,7 +64,7 @@ public class PantryService implements IPantryService {
     /** FIND ALL PANTRIES FOR AN USER BY USERNAME **/
     public List<PantryDTO> findAll(String username) {
         UserDTO userDTO = createUserWithAuth(username);
-        List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(userDTO.getId());
+        List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByLastTimeUpdatedAsc(userDTO.getId());
         List<PantryDTO> pantryDTOList = new ArrayList<>();
         for (Pantry pantry: pantries) {
             pantryDTOList.add(new PantryDTO(pantry));
@@ -81,7 +84,11 @@ public class PantryService implements IPantryService {
 
     public void delete(String username, Long id) {
         UserDTO userDTO = createUserWithAuth(username);
-        List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByCreationDateAsc(userDTO.getId());
+        List<ProductInPantry> productInPantries = productInPantryRepository.findAllByPantry_Id(id);
+        for (ProductInPantry p: productInPantries) {
+            productInPantryRepository.delete(p);
+        }
+        List<Pantry> pantries = pantryRepository.findAllByUserIdOrderByLastTimeUpdatedAsc(userDTO.getId());
         Pantry pantry = checkPantry(id);
         if(pantries.contains(pantry)){
             pantryRepository.delete(pantry);
@@ -108,7 +115,6 @@ public class PantryService implements IPantryService {
     }
 
     public PantryDTO editPantryName(Long pantryId, String newName){
-        System.out.println("Line 111");
         Pantry pantry = checkPantry(pantryId);
         pantry.setName(newName);
         pantryRepository.save(pantry);

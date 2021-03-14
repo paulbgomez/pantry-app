@@ -22,6 +22,10 @@ public class PantryDTO {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     LocalDateTime creationDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    LocalDateTime lastTimeUpdated;
+
 
     @JsonIgnore
     Set<ProductInPantryDTO> productsInPantry;
@@ -34,7 +38,7 @@ public class PantryDTO {
         setName(pantry.getName());
         setUserId(pantry.getUserId());
         setCreationDate(LocalDateTime.now());
-        //setProductsInPantry( pantry.getProductsInPantry());
+        setLastTimeUpdated(LocalDateTime.now());
     }
 
     public PantryDTO(Long id, @NotNull String name, @NotNull Long userId) {
@@ -42,6 +46,7 @@ public class PantryDTO {
         setName(name);
         setUserId(userId);
         setCreationDate(LocalDateTime.now());
+        setLastTimeUpdated(LocalDateTime.now());
     }
 
     public Long getId() {
@@ -82,5 +87,13 @@ public class PantryDTO {
 
     public void setProductsInPantry(Set<ProductInPantryDTO> productsInPantry) {
         this.productsInPantry = productsInPantry;
+    }
+
+    public LocalDateTime getLastTimeUpdated() {
+        return lastTimeUpdated;
+    }
+
+    public void setLastTimeUpdated(LocalDateTime lastTimeUpdated) {
+        this.lastTimeUpdated = lastTimeUpdated;
     }
 }

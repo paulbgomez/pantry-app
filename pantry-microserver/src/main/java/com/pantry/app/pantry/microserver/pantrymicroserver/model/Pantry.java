@@ -21,9 +21,13 @@ public class Pantry {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     LocalDateTime creationDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    LocalDateTime lastTimeUpdated;
+
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pantry")
     Set<ProductInPantry> productsInPantry;
 
     public Pantry() {
@@ -33,6 +37,7 @@ public class Pantry {
         this.name = name;
         this.userId = userId;
         setCreationDate(LocalDateTime.now());
+        setLastTimeUpdated(LocalDateTime.now());
     }
 
 
@@ -74,6 +79,14 @@ public class Pantry {
 
     public void setProductsInPantry(Set<ProductInPantry> productsInPantry) {
         this.productsInPantry = productsInPantry;
+    }
+
+    public LocalDateTime getLastTimeUpdated() {
+        return lastTimeUpdated;
+    }
+
+    public void setLastTimeUpdated(LocalDateTime lastTimeUpdated) {
+        this.lastTimeUpdated = lastTimeUpdated;
     }
 
     @Override

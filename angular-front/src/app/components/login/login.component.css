@@ -9,8 +9,13 @@
     margin: 0;
     padding: 0;
   }
+
+  .link-to-register:hover{
+    cursor: pointer;
+    color: blue;
+  }
   .custom-form {
-    background-color: rgb(238, 238, 238);
+    background-color: rgb(215, 215, 215);
     max-width: 500px;
     max-width: 60%;
     margin: 0px auto;
@@ -21,15 +26,15 @@
     margin-top: 10rem;
     box-shadow: 15px 15px 20px #656565;
   }
-  .custom-form input {
+  .mat-form-field {
     display: block;
     margin: 2rem 0;
     width: 100%;
     border-radius: 0.5rem;
     padding: 1rem;
     border: none;
-    border: 0 none;
   }
+
   .custom-form button {
     text-transform: uppercase;
     letter-spacing: 0.15em;

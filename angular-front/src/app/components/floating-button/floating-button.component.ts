@@ -79,6 +79,12 @@ export class FloatingButtonComponent implements OnInit {
   }
 
   addPantry(): void{
-      this.usersService.addPantry().subscribe();
+      this.usersService.addPantry().subscribe(pantry => {
+        this.usersService.getAllPantries().subscribe(listOfPantries => {
+          this.pantryArray = listOfPantries;
+        });
+        this.pantryArray.push(pantry);
+      });
   }
+
 }

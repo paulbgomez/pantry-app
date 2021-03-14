@@ -5,6 +5,9 @@ import {Router} from '@angular/router';
 import {Pantry, Product} from '../../common/interfaces';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogContentComponent} from '../dialog-content/dialog-content.component';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-pantries',
@@ -18,13 +21,33 @@ export class MyPantriesComponent implements OnInit {
   pantry: Pantry;
   selectedProduct!: Product;
   pantryArray: Pantry[] = [];
-  productsDB: Product[] = [];
+  productsDB: any[] = [];
   newStock: number;
+
+  myControl = new FormControl();
+  filteredOptions: Observable<any>;
 
   constructor(public usersService: UsersService, private cookies: CookieService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
    this.checkIsUserLogged();
+   this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(product => product ? this._filter(product) : this.productsDB.slice())
+      );
+  }
+
+
+  displayFn(product: Product): string {
+    return product && product.name ? product.name : '';
+  }
+
+  private _filter(name: string): Product[] {
+    const filterValue = name.toLowerCase();
+
+    return this.productsDB.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   checkIsUserLogged(): void {
@@ -66,14 +89,17 @@ export class MyPantriesComponent implements OnInit {
     this.usersService.updateStock(pantryId, productId, stock).subscribe();
   }
 
-  getAllProductsFromDB(): void{
+  getAllProductsFromDB(): void {
     this.usersService.getProducts().subscribe(ListOfProducts => {
       this.productsDB = ListOfProducts;
     });
   }
 
   deletePantry(pantryId: number): void{
-    this.usersService.deletePantry(pantryId).subscribe();
+    this.usersService.deletePantry(pantryId).subscribe(() => {
+      const indexErasedElement = this.pantryArray.findIndex(pantry => pantry.id === pantryId);
+      this.pantryArray.splice(indexErasedElement, 1);
+    });
   }
 
   selectProduct(product: Product, pantryId: number): void{

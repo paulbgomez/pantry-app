@@ -23,6 +23,14 @@ public class UserDTO {
         this.role = role;
     }
 
+    public UserDTO(@NotNull String username, @NotNull String password, String email, String name, RoleDTO role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.role = role;
+    }
+
     public Long getId() {
         return id;
     }

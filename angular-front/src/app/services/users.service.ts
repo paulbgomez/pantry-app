@@ -18,7 +18,7 @@ export class UsersService {
     return this.http.post(environment.host + '/auth/signin', user);
   }
 
-  register(user: {username: string, password: string}): Observable<any> {
+  register(user: {username: string, password: string, name: string, email: string}): Observable<any> {
     return this.http.post(environment.host + '/auth/signup', user, {responseType: 'text'});
   }
 

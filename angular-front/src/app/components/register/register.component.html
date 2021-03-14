@@ -1,1 +1,51 @@
-<p>register works!</p>
+<div class="container">
+
+  <form class="custom-form" (ngSubmit)="onSubmit(formDirective)" [formGroup]="form" #formDirective = "ngForm">
+
+    <div class="row py-1">
+      <mat-form-field class="example-full-width">
+        <mat-label>Username</mat-label>
+        <input type="text" matInput formControlName="username" placeholder="username">
+        <mat-error *ngIf="username.hasError('required')">
+          Please enter a valid username
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row py-1">
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="password.hasError('required')">
+          Password can not be empty
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row py-1">
+      <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" placeholder="name">
+        <mat-error *ngIf="name.hasError('required')">
+          Name can not be empty
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row py-1">
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email">
+        <mat-error *ngIf="password.hasError('required')">
+          Email can not be empty
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-flat-button type="submit" [disabled]="form.invalid">
+      Register
+    </button>
+
+  </form>
+
+</div>

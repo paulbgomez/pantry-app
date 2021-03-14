@@ -1,9 +1,6 @@
 package com.pantry.app.edgeservice.controller.impl;
 
-import com.pantry.app.edgeservice.auth.security.AuthenticationRequest;
-import com.pantry.app.edgeservice.auth.security.AuthenticationResponse;
-import com.pantry.app.edgeservice.auth.security.JwtUtils;
-import com.pantry.app.edgeservice.auth.security.MyUserDetailsService;
+import com.pantry.app.edgeservice.auth.security.*;
 import com.pantry.app.edgeservice.clients.UserClient;
 import com.pantry.app.edgeservice.dto.RoleDTO;
 import com.pantry.app.edgeservice.dto.UserDTO;
@@ -60,16 +57,18 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/auth/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> registerAndCreateToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> registerAndCreateToken(@RequestBody NewRegistrationRequest newRegistrationRequest) throws Exception {
 
-        if (userClient.alreadyExistsUserWithUsername(authenticationRequest.getUsername(), "Bearer " + UserController.getUserAuthOk())) {
+        if (userClient.alreadyExistsUserWithUsername(newRegistrationRequest.getUsername(), "Bearer " + UserController.getUserAuthOk())) {
             return ResponseEntity.badRequest().body("Username is already taken");
         }
 
         RoleDTO roleDTO = new RoleDTO("USER");
 
-        UserDTO user = new UserDTO(authenticationRequest.getUsername(),
-                                    authenticationRequest.getPassword(),
+        UserDTO user = new UserDTO(newRegistrationRequest.getUsername(),
+                                    newRegistrationRequest.getPassword(),
+                                    newRegistrationRequest.getEmail(),
+                                    newRegistrationRequest.getName(),
                                     roleDTO);
 
         userClient.add(user, "Bearer " + UserController.getUserAuthOk());

@@ -14,7 +14,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;

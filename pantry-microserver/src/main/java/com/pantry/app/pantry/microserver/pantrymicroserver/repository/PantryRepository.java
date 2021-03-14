@@ -12,7 +12,7 @@ import java.util.Set;
 @Repository
 public interface PantryRepository extends JpaRepository<Pantry, Long> {
 
-    List<Pantry> findAllByUserIdOrderByCreationDateAsc(Long id);
+    List<Pantry> findAllByUserIdOrderByLastTimeUpdatedAsc(Long id);
 
     @Query(value = """
             SELECT product_id, quantity, pantry_id

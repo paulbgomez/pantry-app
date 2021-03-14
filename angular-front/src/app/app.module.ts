@@ -3,7 +3,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {CookieService} from 'ngx-cookie-service';
 import {HttpClientModule} from '@angular/common/http';
-
 import {AppComponent} from './app.component';
 import {LoginComponent} from './components/login/login.component';
 import {MyPantriesComponent} from './components/my-pantries/my-pantries.component';
@@ -21,6 +20,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogContentComponent } from './components/dialog-content/dialog-content.component';
 import { DialogAddPantryComponent } from './components/dialog-add-pantry/dialog-add-pantry.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -47,7 +47,8 @@ import { DialogAddPantryComponent } from './components/dialog-add-pantry/dialog-
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
