@@ -16,34 +16,8 @@
                 </h2>
               </mat-panel-title>
             </mat-expansion-panel-header>
-                <div class="newProduct">
-                  <div class="row mb-4">
-                    <mat-form-field appearance="fill">
-                      <mat-label id="mat-label-select-product" >Select product you want to add</mat-label>
-                      <mat-select [(ngModel)]="selectedProduct" (ngModelChange)="selectProduct($event, pantry.id)">
-                        <mat-option *ngFor="let product of productsDB" [value]="product">
-                          {{ product.name }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-<!--                <div>-->
-<!--                  <div class="row mb-4">-->
-<!--                    <form class="example-form">-->
-<!--                      <mat-form-field class="example-full-width">-->
-<!--                        <mat-label>Product</mat-label>-->
-<!--                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">-->
-<!--                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">-->
-<!--                          <mat-option *ngFor="let product of productsDB | async" [value]="product">-->
-<!--                            {{product.name}}-->
-<!--                          </mat-option>-->
-<!--                        </mat-autocomplete>-->
-<!--                      </mat-form-field>-->
-<!--                    </form>-->
 
-<!--                  </div>-->
-<!--                </div>-->
+            <app-product-search></app-product-search>
                 <div class="listOfProducts">
                   <div class="row mb-4" *ngFor="let product of pantry.ListOfProducts; let i = index">
                       <div class="col-9">

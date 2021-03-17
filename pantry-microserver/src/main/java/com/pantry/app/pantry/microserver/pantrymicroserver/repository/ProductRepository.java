@@ -19,4 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             WHERE product_id = :id""", nativeQuery = true)
     Integer getQuantityProduct(@Param("id") Long id);
 
+    List<Product> findProductByNameContaining(String name);
+
 }

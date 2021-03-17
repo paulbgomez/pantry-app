@@ -28,6 +28,12 @@ public class ProductController implements IProductController {
         return productService.findAll();
     }
 
+    @GetMapping("/product/name={productName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDTO> findByName(@PathVariable String productName){
+        return productService.findProductByName(productName);
+    }
+
     @GetMapping("/product/stock/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Integer getProductQuantity(@PathVariable Long id) {

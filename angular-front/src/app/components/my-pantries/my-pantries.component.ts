@@ -5,9 +5,6 @@ import {Router} from '@angular/router';
 import {Pantry, Product} from '../../common/interfaces';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogContentComponent} from '../dialog-content/dialog-content.component';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-pantries',
@@ -23,32 +20,12 @@ export class MyPantriesComponent implements OnInit {
   pantryArray: Pantry[] = [];
   productsDB: Product[] = [];
   newStock: number;
-  //
-  // myControl = new FormControl();
-  // filteredOptions: Observable<any>;
 
   constructor(public usersService: UsersService, private cookies: CookieService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
    this.checkIsUserLogged();
-   // this.filteredOptions = this.myControl.valueChanges
-   //    .pipe(
-   //      startWith(''),
-   //      map(value => typeof value === 'string' ? value : value.name),
-   //      map(product => product ? this._filter(product) : this.productsDB.slice())
-   //    );
   }
-
-  //
-  // displayFn(product: Product): string {
-  //   return product && product.name ? product.name : '';
-  // }
-  //
-  // private _filter(name: string): Product[] {
-  //   const filterValue = name.toLowerCase();
-  //
-  //   return this.productsDB.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-  // }
 
   checkIsUserLogged(): void {
     if (!this.cookies.check('token')) {

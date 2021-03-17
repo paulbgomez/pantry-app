@@ -1,7 +1,6 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.service.interfaces;
 
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
-
 import java.util.List;
 
 public interface IProductService {
@@ -14,4 +13,6 @@ public interface IProductService {
     void delete(Long id);
 
     Integer getProductQuantity(Long id);
+
+    List<ProductDTO> findProductByName (String nameProduct);
 }

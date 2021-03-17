@@ -51,6 +51,9 @@ public interface PantryClient {
     @PostMapping("/pantry/add/{pantryId}/{productId}")
     void addProductToPantry(@PathVariable Long pantryId, @PathVariable Long productId, @RequestHeader(value = "Authorization") String authorizationHeader);
 
+    @GetMapping("/product/name={productName}")
+    List<ProductDTO> findByName(@PathVariable String productName, @RequestHeader(value = "Authorization") String authorizationHeader);
+
     @PostMapping("/product")
     ProductDTO addProduct(@RequestBody @Valid ProductDTO productDTO, @RequestHeader(value = "Authorization") String authorizationHeader);
 

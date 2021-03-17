@@ -1,6 +1,9 @@
 package com.pantry.app.pantry.microserver.pantrymicroserver.service.impl;
 
+import com.pantry.app.pantry.microserver.pantrymicroserver.clients.UserClient;
+import com.pantry.app.pantry.microserver.pantrymicroserver.controller.impl.AuthController;
 import com.pantry.app.pantry.microserver.pantrymicroserver.dto.ProductDTO;
+import com.pantry.app.pantry.microserver.pantrymicroserver.dto.UserDTO;
 import com.pantry.app.pantry.microserver.pantrymicroserver.enums.Category;
 import com.pantry.app.pantry.microserver.pantrymicroserver.model.Product;
 import com.pantry.app.pantry.microserver.pantrymicroserver.repository.ProductRepository;
@@ -32,6 +35,16 @@ public class ProductService implements IProductService {
         List<ProductDTO> productDTOList = new ArrayList<>();
         for (Product product: products) {
             productDTOList.add(new ProductDTO(product));
+        }
+        return productDTOList;
+    }
+
+    public List<ProductDTO> findProductByName (String nameProduct){
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<Product> products = productRepository.findProductByNameContaining(nameProduct);
+        for (Product p: products
+             ) {
+            productDTOList.add(new ProductDTO(p));
         }
         return productDTOList;
     }

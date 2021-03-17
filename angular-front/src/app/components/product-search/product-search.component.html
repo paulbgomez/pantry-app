@@ -1,0 +1,27 @@
+<div>
+  <div class="row mb-4">
+        <mat-label>Product</mat-label>
+        <input type="text" #searchBox id="search-box" (input)="search(searchBox.value)" />
+    <ul>
+          <li *ngFor="let product of productsDB$ | async" >
+            {{product.name}}
+          </li>
+    </ul>
+  </div>
+</div>
+
+<!--<div id="search-component">-->
+<!--  <label for="search-box">Hero Search</label>-->
+<!--  <input #searchBox id="search-box" (input)="search(searchBox.value)" />-->
+<!--  <ul class="search-result">-->
+<!--    <li *ngFor="let hero of heroes$ | async" >-->
+<!--      <a routerLink="/detail/{{hero.id}}">-->
+<!--        {{hero.name}}-->
+<!--      </a>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</div>-->
+
+<!--[value]="product" -->
+<!--        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+ -->

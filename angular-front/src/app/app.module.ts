@@ -22,6 +22,8 @@ import { DialogContentComponent } from './components/dialog-content/dialog-conte
 import { DialogAddPantryComponent } from './components/dialog-add-pantry/dialog-add-pantry.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EmailDialogComponent } from './components/email-dialog/email-dialog.component';
+import { ProductSearchComponent } from './components/product-search/product-search.component';
+import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { EmailDialogComponent } from './components/email-dialog/email-dialog.com
     FloatingButtonComponent,
     DialogContentComponent,
     DialogAddPantryComponent,
-    EmailDialogComponent
+    EmailDialogComponent,
+    ProductSearchComponent,
+    NotFoundPageComponent
   ],
   imports: [
     BrowserModule,

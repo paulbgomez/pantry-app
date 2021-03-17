@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {CookieService} from 'ngx-cookie-service';
 import {environment} from '../../environments/environment';
-import {Email, Pantry, ProductWithStock} from '../common/interfaces';
+import {Email, Pantry, Product, ProductWithStock} from '../common/interfaces';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,19 @@ export class UsersService {
     });
   }
 
+  findProduct(term: string): Observable<Product[]>{
+    if (!term.trim()){
+      return of([]);
+    }
+    return this.http.get<Product[]>(environment.host + `/product/name=${term}`, {headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getToken()
+      })
+    }).pipe(
+      catchError(this.handleError<Product[]>('findProducts', []))
+    );
+  }
+
   /**
    * @POST ENDPOINTS
    **/
@@ -154,4 +168,24 @@ export class UsersService {
     });
   }
 
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  // tslint:disable-next-line:typedef
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
 }

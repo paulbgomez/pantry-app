@@ -116,6 +116,13 @@ public class PantryController implements IPantryController {
         return pantryClient.getProductQuantity(id, "Bearer " + getPantryAuthOk());
     }
 
+
+    @GetMapping("/product/name={productName}")
+    public List<ProductDTO> findByName(@PathVariable String productName){
+        return pantryClient.findByName(productName, "Bearer " + getPantryAuthOk());
+    };
+
+
     /*
     POST REQUESTS
     */
