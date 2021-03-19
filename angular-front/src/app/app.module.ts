@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {CookieService} from 'ngx-cookie-service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './components/login/login.component';
 import {MyPantriesComponent} from './components/my-pantries/my-pantries.component';
@@ -24,6 +24,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EmailDialogComponent } from './components/email-dialog/email-dialog.component';
 import { ProductSearchComponent } from './components/product-search/product-search.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import {AuthInterceptorService} from './services/auth-interceptor.service';
 
 
 @NgModule({
@@ -56,7 +57,10 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
     MatDialogModule,
     MatAutocompleteModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,
+    {
+    provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

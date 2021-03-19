@@ -54,7 +54,7 @@ export class MyPantriesComponent implements OnInit {
   }
 
   addNewPantry(pantry: Pantry): void{
-    this.pantryArray.push(pantry);
+    this.pantryArray = [...this.pantryArray, pantry];
   }
 
   openDialog(pantryId: number, productId: number, stock: number): void {

@@ -5,6 +5,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {environment} from '../../environments/environment';
 import {Email, Pantry, Product, ProductWithStock} from '../common/interfaces';
 import {catchError} from 'rxjs/operators';
+import {AuthInterceptorService} from './auth-interceptor.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class UsersService {
 
   setToken(token: string): void {
     this.cookies.set('token', token);
+    this.cookies.set('authenticated', 'true');
   }
 
   getToken(): string {
@@ -36,12 +38,12 @@ export class UsersService {
     this.cookies.delete('username');
   }
 
+  authenticated(): boolean {
+    return this.cookies.get('authenticated') === 'true';
+  }
+
   sendEmail(email: Email): void{
-    this.http.post('http://localhost:8089/email/send', email, {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
+    this.http.post('http://localhost:8089/email/send', email);
   }
 
   /**
@@ -49,54 +51,42 @@ export class UsersService {
    **/
 
   getPantryById(id: number): Observable<Pantry>{
-    return this.http.get<Pantry>(environment.host + `/pantry/${id}`, {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
+    return this.http.get<Pantry>(environment.host + `/pantry/${id}`)
+      .pipe(
+        catchError(this.handleError<Pantry>('getPantryById', null))
+      );
   }
 
   getAllPantries(): Observable<Pantry[]>{
-    return this.http.get<Pantry[]>(environment.host + '/pantry/all', {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-        })
-    });
+    return this.http.get<Pantry[]>(environment.host + '/pantry/all')
+      .pipe(
+        catchError(this.handleError<Pantry[]>('getAllPantries', []))
+      );
   }
 
    getProductsFromPantry(id: number): Observable<ProductWithStock[]>{
-    return this.http.get<ProductWithStock[]>(environment.host + `/pantry/all/products/${id}` , {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-        })
-    });
+    return this.http.get<ProductWithStock[]>(environment.host + `/pantry/all/products/${id}`)
+      .pipe(
+        catchError(this.handleError<ProductWithStock[]>('getProductsFromPantry', []))
+      );
   }
 
   getStockProduct(productId: number, pantryId: number): Observable<number>{
-    return this.http.get<number>(environment.host + `/pantry/${pantryId}/stock/product/${productId}`, {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
+    return this.http.get<number>(environment.host + `/pantry/${pantryId}/stock/product/${productId}`)
+      .pipe(
+        catchError(this.handleError<number>('getStockProduct', 0))
+      );
   }
 
   getProducts(): Observable<any>{
-    return this.http.get(environment.host + '/product', {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
+    return this.http.get(environment.host + '/product');
   }
 
   findProduct(term: string): Observable<Product[]>{
     if (!term.trim()){
       return of([]);
     }
-    return this.http.get<Product[]>(environment.host + `/product/name=${term}`, {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    }).pipe(
+    return this.http.get<Product[]>(environment.host + `/product/name=${term}`).pipe(
       catchError(this.handleError<Product[]>('findProducts', []))
     );
   }
@@ -106,22 +96,11 @@ export class UsersService {
    **/
 
   addPantry(): Observable<any>{
-    return this.http.post<any>(environment.host + '/pantry', null,
-      {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-        })
-    });
+    return this.http.post<any>(environment.host + '/pantry', null);
   }
 
   addProductToPantry(pantryId: number, productId: number): Observable<any>{
-    return this.http.post<any>(environment.host + `/pantry/add/${pantryId}/${productId}`, null,
-      {headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.getToken()
-        })
-      });
+    return this.http.post<any>(environment.host + `/pantry/add/${pantryId}/${productId}`, null);
   }
 
   /**
@@ -130,22 +109,12 @@ export class UsersService {
 
   updateStock(pantryId: number, productId: number, quantity: number): Observable<any>{
     return this.http.patch<any>(environment.host + `/pantry/${pantryId}/${productId}/${quantity}`,
-      null,
-      {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
+      null);
   }
 
   editPantryName(pantryId: number, newName: string): Observable<any>{
     return this.http.patch<any>(environment.host +  `/new/pantry/name/${pantryId}/${newName}`,
-      null,
-      {headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.getToken()
-        })
-      });
+      null);
   }
 
   /**
@@ -153,19 +122,11 @@ export class UsersService {
    **/
 
   deletePantry(id: number): Observable<any>{
-    return this.http.delete<any>(environment.host + `/pantry/${id}`, {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
+    return this.http.delete<any>(environment.host + `/pantry/${id}`);
   }
 
   deleteProductFromPantry(pantryId: number, productId: number): Observable<any>{
-    return this.http.delete<any>(environment.host + `/pantry/${pantryId}/product/${productId}`, {headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.getToken()
-      })
-    });
+    return this.http.delete<any>(environment.host + `/pantry/${pantryId}/product/${productId}`);
   }
 
   /**
